@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Base
   layers:
   - Default
   - TransparentFX
@@ -11,9 +12,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - BackGround
+  - MidGround
+  - Frence
   - 
   - 
   - 
@@ -40,4 +41,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4074149109
+    locked: 0
+  - name: Midground
+    uniqueID: 2515826589
+    locked: 0
+  - name: Fences
+    uniqueID: 2284899519
+    locked: 0
+  - name: Foreground
+    uniqueID: 58849933
     locked: 0
