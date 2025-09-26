@@ -5,6 +5,7 @@ using UnityEngine;
 public class move_logic : MonoBehaviour
 {
     private float speed = 3.0f;
+    private Animator animator;
     public GameObject target;
 
     // Bool to turn AutoPilot On/Off
@@ -13,12 +14,14 @@ public class move_logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+        animator.SetBool("IsWalking", false);
+
     }
 
     Vector3 CalculateDistance() 
     {
-        Vector3 fD = target.transform.position - this.transform.position; //我方本體與目標距離
+        Vector3 fD = target.transform.position - this.transform.position; 
         return fD;
     }
 
@@ -26,12 +29,25 @@ public class move_logic : MonoBehaviour
         return CalculateDistance().magnitude;
     }
 
-    void AutoPilot()    //自動波function
+    void AutoPilot()
     {
-        //CalculateAngle();
         Vector3 movement = CalculateDistance();
         movement.Normalize();
         this.transform.Translate(movement * speed * Time.deltaTime);
+        animator.SetBool("IsWalking", true);
+
+        if (CalculateMagnitude() <= 0.8f)
+        {
+            StopPilot();
+        }
+    }
+
+    void StopPilot() {
+        animator.SetBool("IsWalking", false);
+        if (CalculateMagnitude() > 0.8f)
+        {
+            AutoPilot();
+        }
     }
 
     void Update()
@@ -40,15 +56,12 @@ public class move_logic : MonoBehaviour
         if (Input.GetKey(KeyCode.T))
         {
             autoPilot = !autoPilot;
+            Debug.Log(target.transform.position - this.transform.position);
         }
 
-        if (autoPilot) {
-            if (CalculateMagnitude() > 0.8f)
-            {
-                AutoPilot();
-            }
+        if (autoPilot)
+        {
+            AutoPilot();
         }
-
-
     }
 }

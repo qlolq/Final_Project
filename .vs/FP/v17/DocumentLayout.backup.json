@@ -18,25 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "move_logic.cs",
-              "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\move_logic.cs",
-              "ToolTip": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs",
-              "RelativeToolTip": "Assets\\Script\\move_logic.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T09:37:02.342Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -47,7 +30,25 @@
               "RelativeToolTip": "Assets\\Script\\character_property.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T17:29:55.275Z"
+              "WhenOpened": "2025-09-24T17:29:55.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "move_logic.cs",
+              "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\move_logic.cs",
+              "ToolTip": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs",
+              "RelativeToolTip": "Assets\\Script\\move_logic.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T17:26:57.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
