@@ -1,12 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class move_logic : MonoBehaviour
+public class move_logic : action
 {
     private float speed = 3.0f;
-    private Animator animator;
-    public GameObject target;
 
     // Bool to turn AutoPilot On/Off
     bool autoPilot = false;
@@ -16,7 +14,7 @@ public class move_logic : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.SetBool("IsWalking", false);
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     Vector3 CalculateDistance() 
@@ -25,7 +23,7 @@ public class move_logic : MonoBehaviour
         return fD;
     }
 
-    float CalculateMagnitude() { 
+    internal float CalculateMagnitude() { 
         return CalculateDistance().magnitude;
     }
 
@@ -36,32 +34,45 @@ public class move_logic : MonoBehaviour
         this.transform.Translate(movement * speed * Time.deltaTime);
         animator.SetBool("IsWalking", true);
 
-        if (CalculateMagnitude() <= 0.8f)
+        if (this.transform.position.x < target.transform.position.x)
         {
-            StopPilot();
+            spriteRenderer.flipX = true;
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
         }
     }
 
     void StopPilot() {
         animator.SetBool("IsWalking", false);
-        if (CalculateMagnitude() > 0.8f)
-        {
-            AutoPilot();
-        }
     }
 
     void Update()
     {
         // Check if the T key has been pressed
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             autoPilot = !autoPilot;
-            Debug.Log(target.transform.position - this.transform.position);
         }
 
-        if (autoPilot)
+        if (autoPilot == true)
         {
-            AutoPilot();
+
+            if (CalculateMagnitude() > 0.8f)
+            {
+                AutoPilot();
+            }
+
+            else if (CalculateMagnitude() <= 0.8f)
+            {
+                StopPilot();
+            }
+        }
+
+        else if (autoPilot == false) {
+            StopPilot();
         }
     }
 }
