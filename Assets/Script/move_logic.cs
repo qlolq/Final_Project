@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class move_logic : action
 {
-    private float speed = 3.0f;
+    private float speed = 2.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +39,6 @@ public class move_logic : action
             spriteRenderer.flipX = false;
         }
     }
-
-    //public void ChaseStopPilot() {
-    //    animator.SetInt("Action", 0);
-    //}
 
     void Update()
     {

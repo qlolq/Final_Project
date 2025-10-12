@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class attack_logic : action
 {
-    //private move_logic moveLogic;
-
     void Start()
     {
-        //moveLogic = GetComponent<move_logic>();
-
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -27,11 +23,6 @@ public class attack_logic : action
         }
 
     }
-
-    //public void StopPilot()
-    //{
-    //    animator.SetBool("IsAttacking", false);
-    //}
 
     void Update()
     {

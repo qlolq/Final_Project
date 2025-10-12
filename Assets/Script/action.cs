@@ -13,6 +13,7 @@ public class action : MonoBehaviour
 
     //animation state
     int animationState;
+    int attackCount;
 
     //FSM state
     public enum FSMState 
@@ -20,10 +21,12 @@ public class action : MonoBehaviour
         None,   //0
         Idle,   //1
         Chase,   //2
-        Attack, //3
+        stAttack, //3
+        ndAttack, //3
+        rdAttack, //3
         Dead,   //4
     }
-    public FSMState curState;   //public because for looking the state
+    protected FSMState curState;   //public because for looking the state
 
 
     // Start is called before the first frame update
@@ -36,8 +39,11 @@ public class action : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         animationState = 0;
-
         curState = FSMState.Idle;
+
+        attackCount = 0;
+        Invoke("updateIdleState", 2.0f);
+
     }
 
     // Update is called once per frame
@@ -47,17 +53,18 @@ public class action : MonoBehaviour
         {
             case FSMState.Idle: UpdateIdleState(); break;
             case FSMState.Chase: UpdateChaseState(); break;
-            case FSMState.Attack: UpdateAttackState(); break;
+            case FSMState.stAttack: UpdateStAttackState(); break;
+            case FSMState.ndAttack: UpdateNdAttackState(); break;
+            case FSMState.rdAttack: UpdateRdAttackState(); break;
+
         }
 
-        Debug.Log(animationState);
+        Debug.Log(curState);
+        Debug.Log(moveLogic.CalculateMagnitude());
     }
 
     protected void UpdateIdleState()
     {
-        animationState = 0;
-        animator.SetInteger("Action", animationState);
-
         if (this.transform.position.x < target.transform.position.x)
         {
             spriteRenderer.flipX = true;
@@ -68,37 +75,90 @@ public class action : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        if (moveLogic.CalculateMagnitude() > 0.8f)  //chase to target if do not arrive
+        if (moveLogic.CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
         {
+            animationState = 1;
+            animator.SetInteger("Action", animationState);
+
             curState = FSMState.Chase;
         }
 
-        else if (moveLogic.CalculateMagnitude() <= 0.8f)    // attack to target if arrive
+        else if (moveLogic.CalculateMagnitude() <= 0.4f)    // attack to target if arrive
         {
-            curState = FSMState.Attack;
+            animationState = 10;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.stAttack;
         }
     }
 
     protected void UpdateChaseState() 
     {
-        animationState = 1;
-        animator.SetInteger("Action", animationState);
-
         moveLogic.ChaseAutoPilot();
 
-        if (moveLogic.CalculateMagnitude() <= 0.8f)    // idle for quick stop and then for next action    
+        if (moveLogic.CalculateMagnitude() <= 0.4f)    // idle for quick stop and then for next action    
         {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+
             curState = FSMState.Idle;
         }
     }
 
-    protected void UpdateAttackState() 
+    protected void UpdateStAttackState() 
     {
-        animationState = 11;
-        animator.SetInteger("Action", animationState);
+        attackLogic.AutoPilot();    //attack the target in the attack range
+
+        if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+        {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.Idle;
+        }
+
+        else if (moveLogic.CalculateMagnitude() <= 0.4f) 
+        {
+            animationState = 11;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.ndAttack;
+        }
+    }
+
+    protected void UpdateNdAttackState()
+    {
+        attackLogic.AutoPilot();    //attack the target in the attack range
+
+        if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+        {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.Idle;
+        }
+
+        else if (moveLogic.CalculateMagnitude() <= 0.4f)
+        {
+            animationState = 12;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.rdAttack;
+        }
+    }
+
+    protected void UpdateRdAttackState()
+    {
+        attackCount++;
 
         attackLogic.AutoPilot();    //attack the target in the attack range
-        
-        curState = FSMState.Idle;
+
+        if (attackCount > 2) 
+        {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+
+            curState = FSMState.Idle;
+        }
     }
 }
