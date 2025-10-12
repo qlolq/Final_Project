@@ -6,14 +6,10 @@ public class move_logic : action
 {
     private float speed = 3.0f;
 
-    // Bool to turn AutoPilot On/Off
-    bool autoPilot = false;
-
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        animator.SetBool("IsWalking", false);
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -27,12 +23,11 @@ public class move_logic : action
         return CalculateDistance().magnitude;
     }
 
-    void AutoPilot()
+    public void ChaseAutoPilot()
     {
         Vector3 movement = CalculateDistance();
         movement.Normalize();
         this.transform.Translate(movement * speed * Time.deltaTime);
-        animator.SetBool("IsWalking", true);
 
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -45,34 +40,12 @@ public class move_logic : action
         }
     }
 
-    void StopPilot() {
-        animator.SetBool("IsWalking", false);
-    }
+    //public void ChaseStopPilot() {
+    //    animator.SetInt("Action", 0);
+    //}
 
     void Update()
     {
-        // Check if the T key has been pressed
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            autoPilot = !autoPilot;
-        }
-
-        if (autoPilot == true)
-        {
-
-            if (CalculateMagnitude() > 0.8f)
-            {
-                AutoPilot();
-            }
-
-            else if (CalculateMagnitude() <= 0.8f)
-            {
-                StopPilot();
-            }
-        }
-
-        else if (autoPilot == false) {
-            StopPilot();
-        }
+        
     }
 }

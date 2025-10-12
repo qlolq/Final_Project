@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class attack_logic : action
 {
-    private move_logic moveLogic;
+    //private move_logic moveLogic;
 
     void Start()
     {
-        moveLogic = GetComponent<move_logic>();
+        //moveLogic = GetComponent<move_logic>();
 
         animator = GetComponent<Animator>();
-        animator.SetBool("IsAttacking", false);
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void AutoPilot()
+    public void AutoPilot()
     {
-        animator.SetBool("IsAttacking", true);
-
         if (this.transform.position.x < target.transform.position.x)
         {
             spriteRenderer.flipX = true;
@@ -31,21 +28,13 @@ public class attack_logic : action
 
     }
 
-    void StopPilot()
-    {
-        animator.SetBool("IsAttacking", false);
-    }
+    //public void StopPilot()
+    //{
+    //    animator.SetBool("IsAttacking", false);
+    //}
 
     void Update()
     {
-        if (moveLogic.CalculateMagnitude() <= 0.8f)
-        {
-            AutoPilot();
-        }
-
-        else if (moveLogic.CalculateMagnitude() > 0.8f)
-        {
-            StopPilot();
-        }
+ 
     }
 }

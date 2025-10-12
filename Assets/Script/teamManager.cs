@@ -33,9 +33,7 @@ public class teamManager : MonoBehaviour {
     {
         int j = 0;
         int k = 0;
-        string isRedTeam = "RedTeam";
-        string isBlueTeam = "BlueTeam";
-
+       
         if (teamNum>0) {
             foreach (object selectCount in getSelect)
             {
@@ -43,7 +41,7 @@ public class teamManager : MonoBehaviour {
 
                 string RedOrBlue = target.tag;
 
-                if (RedOrBlue == isRedTeam)
+                if (target.gameObject.CompareTag("RedTeam"))
                 {
                     if (j < RedTeam.Length)
                     {
@@ -58,7 +56,7 @@ public class teamManager : MonoBehaviour {
 
                 }
 
-                else if (RedOrBlue == isBlueTeam)
+                else if (target.gameObject.CompareTag("BlueTeam"))
                 {
                     if (k < BlueTeam.Length)
                     {
