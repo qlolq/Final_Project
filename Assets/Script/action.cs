@@ -15,6 +15,10 @@ public class action : MonoBehaviour
     int animationState;
     int attackCount;
 
+    //timer
+    float DistTimer = 0f;
+    float currentAniLength = 0f;
+
     //FSM state
     public enum FSMState 
     {
@@ -42,8 +46,6 @@ public class action : MonoBehaviour
         curState = FSMState.Idle;
 
         attackCount = 0;
-        Invoke("updateIdleState", 2.0f);
-
     }
 
     // Update is called once per frame
@@ -60,7 +62,8 @@ public class action : MonoBehaviour
         }
 
         Debug.Log(curState);
-        Debug.Log(moveLogic.CalculateMagnitude());
+        //Debug.Log(moveLogic.CalculateMagnitude());
+        Debug.Log(attackCount);
     }
 
     protected void UpdateIdleState()
@@ -75,20 +78,31 @@ public class action : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        if (moveLogic.CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
+        DistTimer += Time.deltaTime;
+
+        if (DistTimer >= currentAniLength) 
         {
-            animationState = 1;
-            animator.SetInteger("Action", animationState);
+            if (moveLogic.CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
+            {
+                animationState = 1;
+                animator.SetInteger("Action", animationState);
 
-            curState = FSMState.Chase;
-        }
+                curState = FSMState.Chase;
 
-        else if (moveLogic.CalculateMagnitude() <= 0.4f)    // attack to target if arrive
-        {
-            animationState = 10;
-            animator.SetInteger("Action", animationState);
+                DistTimer = 0f;
+                StartCoroutine(AniLengthDetector());
+            }
 
-            curState = FSMState.stAttack;
+            else if (moveLogic.CalculateMagnitude() <= 0.4f)    // attack to target if arrive
+            {
+                animationState = 10;
+                animator.SetInteger("Action", animationState);
+
+                curState = FSMState.stAttack;
+
+                DistTimer = 0f;
+                StartCoroutine(AniLengthDetector());
+            }
         }
     }
 
@@ -107,58 +121,100 @@ public class action : MonoBehaviour
 
     protected void UpdateStAttackState() 
     {
+        attackCount=1;
+
         attackLogic.AutoPilot();    //attack the target in the attack range
 
-        if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+        DistTimer += Time.deltaTime;
+
+        if (DistTimer>=currentAniLength) 
         {
-            animationState = 0;
-            animator.SetInteger("Action", animationState);
+            if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            {
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
 
-            curState = FSMState.Idle;
-        }
+                curState = FSMState.Idle;
 
-        else if (moveLogic.CalculateMagnitude() <= 0.4f) 
-        {
-            animationState = 11;
-            animator.SetInteger("Action", animationState);
+                DistTimer=0f;
+                StartCoroutine(AniLengthDetector());
+            }
 
-            curState = FSMState.ndAttack;
+            else if (moveLogic.CalculateMagnitude() <= 0.4f)
+            {
+                animationState = 11;
+                animator.SetInteger("Action", animationState);
+
+                curState = FSMState.ndAttack;
+
+                DistTimer=0f;
+                StartCoroutine(AniLengthDetector());
+            }
         }
     }
 
     protected void UpdateNdAttackState()
     {
+        attackCount=2;
+
         attackLogic.AutoPilot();    //attack the target in the attack range
 
-        if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+        DistTimer+=Time.deltaTime;
+
+        if (DistTimer >= currentAniLength) 
         {
-            animationState = 0;
-            animator.SetInteger("Action", animationState);
+            if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            {
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
 
-            curState = FSMState.Idle;
-        }
+                curState = FSMState.Idle;
 
-        else if (moveLogic.CalculateMagnitude() <= 0.4f)
-        {
-            animationState = 12;
-            animator.SetInteger("Action", animationState);
+                DistTimer=0f;
+                StartCoroutine(AniLengthDetector());
+            }
 
-            curState = FSMState.rdAttack;
+            else if (moveLogic.CalculateMagnitude() <= 0.4f)
+            {
+                animationState = 12;
+                animator.SetInteger("Action", animationState);
+
+                curState = FSMState.rdAttack;
+
+                DistTimer = 0f;
+                StartCoroutine(AniLengthDetector());
+            }
         }
     }
 
     protected void UpdateRdAttackState()
     {
-        attackCount++;
+        attackCount=3;
 
         attackLogic.AutoPilot();    //attack the target in the attack range
 
-        if (attackCount > 2) 
-        {
-            animationState = 0;
-            animator.SetInteger("Action", animationState);
+        DistTimer += Time.deltaTime;
 
-            curState = FSMState.Idle;
+        if (DistTimer >= currentAniLength) 
+        {
+            if (attackCount > 2)
+            {
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
+
+                curState = FSMState.Idle;
+
+                DistTimer = 0f;
+                StartCoroutine(AniLengthDetector());
+            }
+
         }
+
+    }
+
+    IEnumerator AniLengthDetector()
+    {
+        yield return null;
+        currentAniLength = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 }
