@@ -7,20 +7,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\action.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\attack_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\attack_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\move_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\character_property.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\character_property.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\Triangle_property.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\Triangle_property.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\attack_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\attack_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\move_logic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\teamManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,12 +46,11 @@
               "RelativeToolTip": "Assets\\Script\\teamManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T18:34:20.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T18:34:20.468Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Triangle_property.cs",
               "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\Triangle_property.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Triangle_property.cs",
@@ -64,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "move_logic.cs",
               "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\move_logic.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\move_logic.cs",
@@ -72,12 +71,11 @@
               "RelativeToolTip": "Assets\\Script\\move_logic.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T09:37:02.342Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T09:37:02.342Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "attack_logic.cs",
               "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\attack_logic.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\attack_logic.cs",
@@ -96,20 +94,20 @@
               "RelativeDocumentMoniker": "Assets\\Script\\action.cs",
               "ToolTip": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\action.cs",
               "RelativeToolTip": "Assets\\Script\\action.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAcwCwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAswFIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-26T15:54:20.693Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "character_property.cs",
               "DocumentMoniker": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\character_property.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\character_property.cs",
               "ToolTip": "C:\\Users\\chowy\\desktop\\FINAL_PROJECT\\FP\\Assets\\Script\\character_property.cs",
               "RelativeToolTip": "Assets\\Script\\character_property.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-24T17:29:55.275Z",
               "EditorCaption": ""

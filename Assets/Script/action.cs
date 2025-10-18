@@ -80,7 +80,7 @@ public class action : MonoBehaviour
 
         DistTimer += Time.deltaTime;
 
-        if (DistTimer >= currentAniLength) 
+        if (DistTimer >= currentAniLength+0.3f) 
         {
             if (moveLogic.CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
             {
@@ -127,7 +127,7 @@ public class action : MonoBehaviour
 
         DistTimer += Time.deltaTime;
 
-        if (DistTimer>=currentAniLength) 
+        if (DistTimer>=currentAniLength + 0.3f) 
         {
             if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
             {
@@ -161,7 +161,7 @@ public class action : MonoBehaviour
 
         DistTimer+=Time.deltaTime;
 
-        if (DistTimer >= currentAniLength) 
+        if (DistTimer >= currentAniLength + 0.3f) 
         {
             if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
             {
@@ -195,7 +195,7 @@ public class action : MonoBehaviour
 
         DistTimer += Time.deltaTime;
 
-        if (DistTimer >= currentAniLength) 
+        if (DistTimer >= currentAniLength + 0.3f) 
         {
             if (attackCount > 2)
             {
