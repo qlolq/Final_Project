@@ -56,3 +56,9 @@ TagManager:
   - name: Foreground
     uniqueID: 58849933
     locked: 0
+  - name: HP frame
+    uniqueID: 1016733285
+    locked: 0
+  - name: HP bar
+    uniqueID: 220197723
+    locked: 0
