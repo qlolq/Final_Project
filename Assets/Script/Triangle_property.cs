@@ -7,6 +7,8 @@ public class Triangle_property : character_property
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
+
         name = "Triangle";
         hp = 600;
         atk = 0;
@@ -22,6 +24,6 @@ public class Triangle_property : character_property
     // Update is called once per frame
     void Update()
     {
-
+        base.Update();
     }
 }

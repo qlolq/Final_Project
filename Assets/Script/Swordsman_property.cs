@@ -8,6 +8,8 @@ public class Swordsman_property : character_property
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
+
         name = "Swordsman";
         hp = 456;
         atk = 55;
@@ -23,6 +25,6 @@ public class Swordsman_property : character_property
     // Update is called once per frame
     void Update()
     {
-        
+        base.Update();
     }
 }

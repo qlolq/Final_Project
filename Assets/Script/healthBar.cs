@@ -14,7 +14,7 @@ public class healthBar : MonoBehaviour
 
     //coroutine on/off
     private bool coroutineOperating;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +33,10 @@ public class healthBar : MonoBehaviour
 
         if (healthPointBarEffect.fillAmount > healthPointBar.fillAmount && coroutineOperating == false)
         {
-            StartCoroutine(Movement());
+            StartCoroutine(HpBarEffectMovement());
         }
     }
-    IEnumerator Movement() 
+    IEnumerator HpBarEffectMovement() 
     {
         coroutineOperating = true;
 

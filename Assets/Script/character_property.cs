@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,22 +8,49 @@ public class character_property : MonoBehaviour
     protected int hp;
     protected int atk;
     protected int def;
-    protected int satk; //special attack,³q±`«ü©w¬°Å]ªk§ğÀ»    
-    protected int sdef; //special defence,³q±`«ü©w¬°Å]ªk¨¾¿m
+    protected int satk; //special attack,é€šå¸¸æŒ‡å®šç‚ºé­”æ³•æ”»æ“Š    
+    protected int sdef; //special defence,é€šå¸¸æŒ‡å®šç‚ºé­”æ³•é˜²ç¦¦
     protected float speed;
-    protected float dex;  //dex¬O«ü§ğÀ»³t«×¡]§ğÀ»ªºÀW²v¡^
-    protected float atkRange; //§ğÀ»½d³ò¡]¤âªøµu¡^¥ufor´¶³q§ğÀ»
-    protected float effectRange; //¶Ë®`§P©w½d³ò¡]AOE¡H³æÅé§ğÀ»¡H¡^¥ufor´¶³q§ğÀ»
+    protected float dex;  //dexæ˜¯æŒ‡æ”»æ“Šé€Ÿåº¦ï¼ˆæ”»æ“Šçš„é »ç‡ï¼‰
+    protected float atkRange; //æ”»æ“Šç¯„åœï¼ˆæ‰‹é•·çŸ­ï¼‰åªforæ™®é€šæ”»æ“Š
+    protected float effectRange; //å‚·å®³åˆ¤å®šç¯„åœï¼ˆAOEï¼Ÿå–®é«”æ”»æ“Šï¼Ÿï¼‰åªforæ™®é€šæ”»æ“Š
                                  //skilltime
+    public Canvas gameCanvas;
+    protected Camera mainCamera;
+    public GameObject hpBarInstance;
+    protected GameObject HP_show;
+    protected Vector3 offset = new Vector3(0, -0.7f, 0); 
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
+        mainCamera = Camera.main;
+        HP_show = Instantiate(hpBarInstance, gameCanvas.transform);
+
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+        UpdateHPbarPos();
+    }
+
+    void UpdateHPbarPos()
+    {
+        if (mainCamera == null) return;
+
+        Vector3 targetWorldPos = transform.position + offset;
+        Vector2 screenPos = mainCamera.WorldToScreenPoint(targetWorldPos);
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            gameCanvas.GetComponent<RectTransform>(),
+            screenPos,
+            gameCanvas.worldCamera,
+            out Vector2 uiPos))
+        {
+            HP_show.GetComponent<RectTransform>().localPosition = uiPos;
+            //Debug.Log("å°è¯•å®ä¾‹åŒ–è¡€æ¡ï¼š" + (HP_show != null ? "æˆåŠŸ" : "å¤±è´¥"));
+        }
+
     }
 }

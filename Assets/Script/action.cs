@@ -61,9 +61,9 @@ public class action : MonoBehaviour
 
         }
 
-        Debug.Log(curState);
+        //Debug.Log(curState);
         //Debug.Log(moveLogic.CalculateMagnitude());
-        Debug.Log(attackCount);
+        //Debug.Log(attackCount);
     }
 
     protected void UpdateIdleState()
