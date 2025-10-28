@@ -19,7 +19,10 @@ public class character_property : MonoBehaviour
     protected Camera mainCamera;
     public GameObject hpBarInstance;
     protected GameObject HP_show;
-    protected Vector3 offset = new Vector3(0, -0.7f, 0); 
+    protected Vector3 offset = new Vector3(0, -0.7f, 0);
+
+    protected GameObject hpBar;
+    protected GameObject hpBarEffect;
 
     // Start is called before the first frame update
     protected void Start()
