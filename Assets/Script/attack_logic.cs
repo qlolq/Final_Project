@@ -12,7 +12,7 @@ public class attack_logic : action
 
     public void AutoPilot()
     {
-        if (this.transform.position.x < target.transform.position.x)
+        if (this.transform.position.x < targets.transform.position.x)
         {
             spriteRenderer.flipX = true;
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class action : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject targets;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected move_logic moveLogic;
@@ -68,7 +68,7 @@ public class action : MonoBehaviour
 
     protected void UpdateIdleState()
     {
-        if (this.transform.position.x < target.transform.position.x)
+        if (this.transform.position.x < targets.transform.position.x)
         {
             spriteRenderer.flipX = true;
         }

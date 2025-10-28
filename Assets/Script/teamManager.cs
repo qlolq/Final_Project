@@ -4,23 +4,22 @@ using UnityEngine;
 [System.Serializable]
 
 public class teamManager : MonoBehaviour {
-    public int teamNum =1;
-    ArrayList getSelect = new ArrayList();
-    public GameObject target;
-    GameObject[] RedTeam;
-    GameObject[] BlueTeam;
-
+    public int teamNum;
+    public GameObject[] RedTeam;
+    public GameObject[] BlueTeam;
+    protected GameObject[] targets;
 
     // Start is called before the first frame update
     void Start()
     {
-        int selectCount = teamNum * 2 - 1;
+        teamNum = 3;
 
-        int teamSize = teamNum - 1;
-        RedTeam = new GameObject [teamSize];
-        BlueTeam = new GameObject [teamSize];
+        RedTeam = new GameObject[teamNum];
+        BlueTeam = new GameObject[teamNum];
+        targets = new GameObject[teamNum];
 
-        WhichTeam();
+        WhoIsEnemy();
+        EnemyList();
     }
 
     // Update is called once per frame
@@ -29,56 +28,28 @@ public class teamManager : MonoBehaviour {
 
     }
 
-    void WhichTeam()
+    void WhoIsEnemy()
     {
-        int j = 0;
-        int k = 0;
-       
-        if (teamNum>0) {
-            foreach (object selectCount in getSelect)
+        for (int i=0; i<teamNum;i++) 
+        {
+            RedTeam[i].tag = "RedTeam";
+            BlueTeam[i].tag = "BlueTeam";
+        }
+    }
+
+    void EnemyList() 
+    {
+        for (int i = 0; i < teamNum; i++)
+        {
+            if (gameObject.CompareTag("RedTeam"))
             {
-                getSelect.Add(target);
+                targets[i] = BlueTeam[i];
+            }
 
-                string RedOrBlue = target.tag;
-
-                if (target.gameObject.CompareTag("RedTeam"))
-                {
-                    if (j < RedTeam.Length)
-                    {
-                        RedTeam[j] = target;
-                        j++;
-                    }
-
-                    else
-                    {
-                        Debug.Log("Red Team is full!");
-                    }
-
-                }
-
-                else if (target.gameObject.CompareTag("BlueTeam"))
-                {
-                    if (k < BlueTeam.Length)
-                    {
-                        BlueTeam[k] = target;
-                        k++;
-                    }
-
-                    else
-                    {
-                        Debug.Log("Blue Team is full!");
-                    }
-                }
-
-                else
-                {
-                    Debug.Log("The Character has not tag!!!");
-                    return;
-                }
+            else if (gameObject.CompareTag("BlueTeam"))
+            {
+                targets[i] = RedTeam[i];
             }
         }
-
-        
-
     }
 }
