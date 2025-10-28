@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class character_property : MonoBehaviour
+public class character_property : GameManager
 {
     protected string name;
     protected int hp;

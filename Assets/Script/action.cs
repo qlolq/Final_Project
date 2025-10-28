@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 //using static action;
 
-public class action : MonoBehaviour
+public class action : GameManager
 {
-    public GameObject targets;
+    //public GameObject targets;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected move_logic moveLogic;
     protected attack_logic attackLogic;
+
+    protected Strategy strategy;
 
     //animation state
     int animationState;
@@ -38,6 +40,7 @@ public class action : MonoBehaviour
     {
         moveLogic = GetComponent<move_logic>();
         attackLogic = GetComponent<attack_logic>();
+        strategy = GetComponent<Strategy>();
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,7 +71,7 @@ public class action : MonoBehaviour
 
     protected void UpdateIdleState()
     {
-        if (this.transform.position.x < targets.transform.position.x)
+        if (this.transform.position.x < strategy.target.transform.position.x)
         {
             spriteRenderer.flipX = true;
         }

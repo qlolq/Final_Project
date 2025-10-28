@@ -15,7 +15,7 @@ public class move_logic : action
 
     Vector3 CalculateDistance() 
     {
-        Vector3 fD = targets.transform.position - this.transform.position; 
+        Vector3 fD = strategy.target.transform.position - this.transform.position; 
         return fD;
     }
 
@@ -29,7 +29,7 @@ public class move_logic : action
         movement.Normalize();
         this.transform.Translate(movement * speed * Time.deltaTime);
 
-        if (this.transform.position.x < targets.transform.position.x)
+        if (this.transform.position.x < strategy.target.transform.position.x)
         {
             spriteRenderer.flipX = true;
         }

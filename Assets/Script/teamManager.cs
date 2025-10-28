@@ -1,23 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
 
-public class teamManager : MonoBehaviour {
-    public int teamNum;
-    public GameObject[] RedTeam;
-    public GameObject[] BlueTeam;
-    protected GameObject[] targets;
+public class teamManager : GameManager
+
+{
+    public CharInstantiate charInstantiate;
+
+    public int teamNum = 1;
+    internal GameObject[] RedTeam;
+    internal GameObject[] BlueTeam;
+    internal GameObject[] targets;
+
+    public GameObject character;
 
     // Start is called before the first frame update
     void Start()
     {
-        teamNum = 3;
+        //charInstantiate = GetComponent<CharInstantiate>();
 
         RedTeam = new GameObject[teamNum];
         BlueTeam = new GameObject[teamNum];
         targets = new GameObject[teamNum];
 
+        charInstantiate.BlueTeamSpawnLocation();
+        charInstantiate.RedTeamSpawnLocation();
+
+        CharacterInstantiate();
+       
         WhoIsEnemy();
         EnemyList();
     }
@@ -25,7 +35,19 @@ public class teamManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    void CharacterInstantiate()
+    {
+        for (int i = 0; i < teamNum; i++)
+        {
+            Vector3 bluePos = charInstantiate.GetBluePos(i);
+            Vector3 redPos = charInstantiate.GetRedPos(i);
+
+            BlueTeam[i] = Instantiate(character, bluePos, Quaternion.identity);
+            RedTeam[i] = Instantiate(character, redPos, Quaternion.identity);
+        }
     }
 
     void WhoIsEnemy()
@@ -34,10 +56,12 @@ public class teamManager : MonoBehaviour {
         {
             RedTeam[i].tag = "RedTeam";
             BlueTeam[i].tag = "BlueTeam";
+            //Debug.Log(RedTeam[i].tag);
+            //Debug.Log(BlueTeam[i].tag);
         }
     }
 
-    void EnemyList() 
+    void EnemyList()
     {
         for (int i = 0; i < teamNum; i++)
         {
