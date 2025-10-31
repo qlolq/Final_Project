@@ -50,7 +50,7 @@ public class CharInstantiate : MonoBehaviour
 
     }
 
-    public void BlueTeamSpawnLocation(  ) 
+    public void BlueTeamSpawnLocation() 
     {
         for (int i=0; i<count;i++) 
         {

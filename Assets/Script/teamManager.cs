@@ -10,7 +10,7 @@ public class teamManager : GameManager
     public int teamNum = 1;
     internal GameObject[] RedTeam;
     internal GameObject[] BlueTeam;
-    internal GameObject[] targets;
+    //internal GameObject[] targets;
 
     public GameObject character;
 
@@ -21,7 +21,6 @@ public class teamManager : GameManager
 
         RedTeam = new GameObject[teamNum];
         BlueTeam = new GameObject[teamNum];
-        targets = new GameObject[teamNum];
 
         charInstantiate.BlueTeamSpawnLocation();
         charInstantiate.RedTeamSpawnLocation();
@@ -29,7 +28,7 @@ public class teamManager : GameManager
         CharacterInstantiate();
        
         WhoIsEnemy();
-        EnemyList();
+        //EnemyList();
     }
 
     // Update is called once per frame
@@ -56,24 +55,16 @@ public class teamManager : GameManager
         {
             RedTeam[i].tag = "RedTeam";
             BlueTeam[i].tag = "BlueTeam";
-            //Debug.Log(RedTeam[i].tag);
-            //Debug.Log(BlueTeam[i].tag);
         }
     }
 
-    void EnemyList()
+    public GameObject GetBlueTeam(int i) 
     {
-        for (int i = 0; i < teamNum; i++)
-        {
-            if (gameObject.CompareTag("RedTeam"))
-            {
-                targets[i] = BlueTeam[i];
-            }
+        return BlueTeam[i];
+    }
 
-            else if (gameObject.CompareTag("BlueTeam"))
-            {
-                targets[i] = RedTeam[i];
-            }
-        }
+    public GameObject GetRedTeam(int i)
+    {
+        return RedTeam[i];
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 //using static action;
 
-public class action : GameManager
+public class action : MonoBehaviour
 {
-    //public GameObject targets;
+    protected GameObject target;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected move_logic moveLogic;
@@ -54,6 +54,8 @@ public class action : GameManager
     // Update is called once per frame
     void Update()
     {
+        target = strategy.GetNearestTarget();
+
         switch (curState)
         {
             case FSMState.Idle: UpdateIdleState(); break;
@@ -71,7 +73,7 @@ public class action : GameManager
 
     protected void UpdateIdleState()
     {
-        if (this.transform.position.x < strategy.target.transform.position.x)
+        if (this.transform.position.x < target.transform.position.x)
         {
             spriteRenderer.flipX = true;
         }

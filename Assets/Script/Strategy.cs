@@ -2,42 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Strategy : teamManager
+public class Strategy : MonoBehaviour
 {
-    public teamManager team_manager;
+    protected teamManager team_manager;
 
-    protected int count;
-    protected float[] targetDist;
-    protected float nearestDist;
+    private int count;
+    private float[] targetDist;
+    private GameObject[] targets;
+
+    private float nearestDist;
 
     private float exploreTimer;
     private float timeDeliver;
     private bool isOperate;
 
-    internal GameObject target;
+    private GameObject nearestTarget;
 
     // Start is called before the first frame update
     void Start()
     {
-        team_manager = GetComponent<teamManager>();
+        team_manager = FindFirstObjectByType<teamManager>();
 
         count = team_manager.teamNum;
+        targetDist = new float[count];
+        targets = new GameObject[count];
+
+        EnemyList();
 
         exploreTimer = 5.0f;
         timeDeliver = 5.0f;
         
         isOperate = true;
+
+        nearestDist = 1000.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(targets);
+
         if (isOperate)
         {
             TimerOperate();
         }
+    }
 
+    public void EnemyList()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (this.gameObject.CompareTag("RedTeam"))
+            {
+                targets[i] = team_manager.GetRedTeam(i);
+            }
 
+            else if (this.gameObject.CompareTag("BlueTeam"))
+            {
+                targets[i] = team_manager.GetBlueTeam(i);
+            }
+        }
     }
 
     void TimerOperate() 
@@ -54,25 +78,32 @@ public class Strategy : teamManager
     }
 
     //Strategy 1 -- the nearest target  
-    void ExploreTargetViaDistance() 
+    public void ExploreTargetViaDistance() 
     {
         for (int i = 0; i < count; i++) 
         {
-            targetDist[i] = Vector3.Distance(team_manager.targets[i].transform.position , this.transform.position);
+            GameObject target = targets[i];
 
-            if (i == 0) 
+            if (target == null)
             {
-                nearestDist = targetDist[i];
+                nearestTarget = null;
+                continue;
             }
 
-            if (i > 0 && i < count) 
+            targetDist[i] = Vector3.Distance(target.transform.position , this.transform.position);
+
+            if (targetDist[i] < nearestDist)
             {
-                if (targetDist[i] < nearestDist) 
-                {
-                    nearestDist = targetDist[i];
-                    target = team_manager.targets[i];   // find the target
-                }
+                nearestDist = targetDist[i];
+                nearestTarget = target;   // find the target
             }
         }
     }
+
+    public GameObject GetNearestTarget() 
+    {
+        return nearestTarget;
+    }
+
+    
 }

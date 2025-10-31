@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8540791799575086003}
   - component: {fileID: 8260843047408428259}
   - component: {fileID: 1956887269062863319}
-  - component: {fileID: -4408362503391883062}
+  - component: {fileID: 2628691791540734847}
   m_Layer: 0
   m_Name: char001
   m_TagString: Untagged
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameCanvas: {fileID: 0}
   hpBarInstance: {fileID: 0}
---- !u!114 &-4408362503391883062
+--- !u!114 &2628691791540734847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,6 +251,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50f22da6c401f740ac33b34c75aaa8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNum: 1
-  RedTeam: []
-  BlueTeam: []
+  team_manager: {fileID: 0}
