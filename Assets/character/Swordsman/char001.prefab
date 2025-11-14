@@ -10,14 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2099755635739510294}
   - component: {fileID: 477114846059034175}
-  - component: {fileID: 4029792332723618395}
   - component: {fileID: 6962292931759493802}
   - component: {fileID: 5265897195669941690}
   - component: {fileID: 7197439462097733210}
-  - component: {fileID: 8540791799575086003}
   - component: {fileID: 8260843047408428259}
   - component: {fileID: 1956887269062863319}
-  - component: {fileID: 2628691791540734847}
   m_Layer: 0
   m_Name: char001
   m_TagString: Untagged
@@ -94,18 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4029792332723618395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220550761378826047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708b54bb55c5e2e4a9d9435e6c38590c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &6962292931759493802
 Animator:
   serializedVersion: 7
@@ -201,18 +186,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8540791799575086003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220550761378826047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548cc9a9b46493044b5902cc9edce7fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8260843047408428259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0181739e971caa4c94fb0c79e2f60e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamNum: 1
+  character: {fileID: 0}
 --- !u!114 &1956887269062863319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,18 +212,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09b5b7e11e9e36479cee09139359ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCanvas: {fileID: 0}
-  hpBarInstance: {fileID: 0}
---- !u!114 &2628691791540734847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220550761378826047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a50f22da6c401f740ac33b34c75aaa8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team_manager: {fileID: 0}
+  teamNum: 1
+  character: {fileID: 0}

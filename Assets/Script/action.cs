@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class action : MonoBehaviour
 {
-    protected GameObject target;
+    protected GameObject nearestTarget;
+    protected teamManager team_Manager;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
-    protected move_logic moveLogic;
-    protected attack_logic attackLogic;
 
-    protected Strategy strategy;
+    // property
+    protected float speed = 2.5f;
+
 
     //animation state
     int animationState;
@@ -38,9 +39,7 @@ public class action : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveLogic = GetComponent<move_logic>();
-        attackLogic = GetComponent<attack_logic>();
-        strategy = GetComponent<Strategy>();
+        team_Manager = GetComponent<teamManager>();
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -54,24 +53,24 @@ public class action : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        target = strategy.GetNearestTarget();
+        nearestTarget = team_Manager.nearestTarget;
 
         switch (curState)
         {
-            case FSMState.Idle: UpdateIdleState(); break;
-            case FSMState.Chase: UpdateChaseState(); break;
-            case FSMState.stAttack: UpdateStAttackState(); break;
-            case FSMState.ndAttack: UpdateNdAttackState(); break;
-            case FSMState.rdAttack: UpdateRdAttackState(); break;
+            case FSMState.Idle: UpdateIdleState(nearestTarget); break;
+            case FSMState.Chase: UpdateChaseState(nearestTarget); break;
+            case FSMState.stAttack: UpdateStAttackState(nearestTarget); break;
+            case FSMState.ndAttack: UpdateNdAttackState(nearestTarget); break;
+            case FSMState.rdAttack: UpdateRdAttackState(nearestTarget); break;
 
         }
 
         //Debug.Log(curState);
-        //Debug.Log(moveLogic.CalculateMagnitude());
+        //Debug.Log(CalculateMagnitude());
         //Debug.Log(attackCount);
     }
 
-    protected void UpdateIdleState()
+    protected void UpdateIdleState(GameObject target)
     {
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -87,7 +86,7 @@ public class action : MonoBehaviour
 
         if (DistTimer >= currentAniLength+0.3f) 
         {
-            if (moveLogic.CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
+            if (CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
             {
                 animationState = 1;
                 animator.SetInteger("Action", animationState);
@@ -98,7 +97,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (moveLogic.CalculateMagnitude() <= 0.4f)    // attack to target if arrive
+            else if (CalculateMagnitude() <= 0.4f)    // attack to target if arrive
             {
                 animationState = 10;
                 animator.SetInteger("Action", animationState);
@@ -111,11 +110,23 @@ public class action : MonoBehaviour
         }
     }
 
-    protected void UpdateChaseState() 
+    protected void UpdateChaseState(GameObject target) 
     {
-        moveLogic.ChaseAutoPilot();
+        Vector3 movement = CalculateDistance(nearestTarget);
+        movement.Normalize();
+        this.transform.Translate(movement * speed * Time.deltaTime);
 
-        if (moveLogic.CalculateMagnitude() <= 0.4f)    // idle for quick stop and then for next action    
+        if (this.transform.position.x < target.transform.position.x)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        if (CalculateMagnitude() <= 0.4f)    // idle for quick stop and then for next action    
         {
             animationState = 0;
             animator.SetInteger("Action", animationState);
@@ -124,17 +135,25 @@ public class action : MonoBehaviour
         }
     }
 
-    protected void UpdateStAttackState() 
+    protected void UpdateStAttackState(GameObject target) 
     {
         attackCount=1;
 
-        attackLogic.AutoPilot();    //attack the target in the attack range
+        if (this.transform.position.x < target.transform.position.x)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
 
         DistTimer += Time.deltaTime;
 
         if (DistTimer>=currentAniLength + 0.3f) 
         {
-            if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            if (CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
             {
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
@@ -145,7 +164,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (moveLogic.CalculateMagnitude() <= 0.4f)
+            else if (CalculateMagnitude() <= 0.4f)
             {
                 animationState = 11;
                 animator.SetInteger("Action", animationState);
@@ -158,17 +177,25 @@ public class action : MonoBehaviour
         }
     }
 
-    protected void UpdateNdAttackState()
+    protected void UpdateNdAttackState(GameObject target)
     {
         attackCount=2;
 
-        attackLogic.AutoPilot();    //attack the target in the attack range
+        if (this.transform.position.x < target.transform.position.x)
+        {
+            spriteRenderer.flipX = true;
+        }
 
-        DistTimer+=Time.deltaTime;
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        DistTimer +=Time.deltaTime;
 
         if (DistTimer >= currentAniLength + 0.3f) 
         {
-            if (moveLogic.CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            if (CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
             {
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
@@ -179,7 +206,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (moveLogic.CalculateMagnitude() <= 0.4f)
+            else if (CalculateMagnitude() <= 0.4f)
             {
                 animationState = 12;
                 animator.SetInteger("Action", animationState);
@@ -192,11 +219,19 @@ public class action : MonoBehaviour
         }
     }
 
-    protected void UpdateRdAttackState()
+    protected void UpdateRdAttackState(GameObject target)
     {
         attackCount=3;
 
-        attackLogic.AutoPilot();    //attack the target in the attack range
+        if (this.transform.position.x < target.transform.position.x)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
 
         DistTimer += Time.deltaTime;
 
@@ -221,5 +256,18 @@ public class action : MonoBehaviour
     {
         yield return null;
         currentAniLength = animator.GetCurrentAnimatorStateInfo(0).length;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
+    
+    Vector3 CalculateDistance(GameObject target)
+    {
+        Vector3 fD = target.transform.position - this.transform.position;
+        return fD;
+    }
+
+    internal float CalculateMagnitude()
+    {
+        return CalculateDistance(nearestTarget).magnitude;
     }
 }

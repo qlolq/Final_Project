@@ -2,69 +2,169 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class teamManager : GameManager
+public class teamManager : MonoBehaviour
 
 {
-    public CharInstantiate charInstantiate;
-
+    public teamManager Enemy;
     public int teamNum = 1;
-    internal GameObject[] RedTeam;
-    internal GameObject[] BlueTeam;
-    //internal GameObject[] targets;
+    internal GameObject[] Team;
+    private Vector3 [] RandPos;
+    private string teamTag;
 
-    public GameObject character;
+    [SerializeField] private GameObject character;
+
+    protected float[] targetDist;
+    protected GameObject[] targets;
+    internal float nearestDist;
+    internal GameObject nearestTarget;
+
+    protected float exploreTimer;
+    protected float timeDeliver;
+    protected bool isOperate;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        //charInstantiate = GetComponent<CharInstantiate>();
+        teamTag = this.gameObject.tag;
+        Team = new GameObject[teamNum];
 
-        RedTeam = new GameObject[teamNum];
-        BlueTeam = new GameObject[teamNum];
+        targetDist = new float[teamNum];
+        targets = new GameObject[teamNum];
+        nearestDist = 1000.0f;
 
-        charInstantiate.BlueTeamSpawnLocation();
-        charInstantiate.RedTeamSpawnLocation();
+        exploreTimer = 5.0f;
+        timeDeliver = 5.0f;
+        isOperate = true;
 
-        CharacterInstantiate();
-       
-        WhoIsEnemy();
-        //EnemyList();
+        if (this.gameObject.CompareTag("BlueTeam"))
+        {
+            BlueTeamSpawnLocation(teamNum);
+        }
+
+        else if (this.gameObject.CompareTag("RedTeam")) 
+        {
+            RedTeamSpawnLocation(teamNum);
+        }
+
+        CharacterInstantiate(teamTag);
+        DetectTeamTag(teamTag);
+        EnemyList(teamNum);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (isOperate)
+        {
+            isOperate = false;
+            TimerOperate();
+        }
     }
 
-    void CharacterInstantiate()
+    public Vector3[] BlueTeamSpawnLocation(int count)
+    {
+        RandPos = new Vector3[count];
+
+        float BlueminX = -5.3f;
+        float BluemaxX = -1.0f;
+        float BlueminY = -3.0f;
+        float BluemaxY = 3.0f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float x = Random.Range(BlueminX, BluemaxX);
+            float y = Random.Range(BlueminY, BluemaxY);
+            RandPos[i] = new Vector3(x, y, 0);
+        }
+
+        return RandPos;
+    }
+
+    public Vector3[] RedTeamSpawnLocation(int count)
+    {
+        RandPos = new Vector3[count];
+
+        float RedminX = 1.0f;
+        float RedmaxX = 5.3f;
+        float RedminY = -3.0f;
+        float RedmaxY = 3.0f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float x = Random.Range(RedminX, RedmaxX);
+            float y = Random.Range(RedminY, RedmaxY);
+            RandPos[i] = new Vector3(x, y, 0);
+        }
+
+        return RandPos;
+    }
+
+    void CharacterInstantiate(string teamTag)
     {
         for (int i = 0; i < teamNum; i++)
         {
-            Vector3 bluePos = charInstantiate.GetBluePos(i);
-            Vector3 redPos = charInstantiate.GetRedPos(i);
-
-            BlueTeam[i] = Instantiate(character, bluePos, Quaternion.identity);
-            RedTeam[i] = Instantiate(character, redPos, Quaternion.identity);
+            Vector3 teamPos = RandPos[i];
+            Team[i] = Instantiate(character, teamPos, Quaternion.identity);
         }
     }
 
-    void WhoIsEnemy()
+/// <summary>
+/// //Team character Property, character Position is defined 
+/// </summary>
+/// <param name="teamTag"></param>
+    void DetectTeamTag(string teamTag)
     {
         for (int i=0; i<teamNum;i++) 
         {
-            RedTeam[i].tag = "RedTeam";
-            BlueTeam[i].tag = "BlueTeam";
+            Team[i].tag = teamTag;
         }
     }
 
-    public GameObject GetBlueTeam(int i) 
+    void EnemyList(int count)
     {
-        return BlueTeam[i];
+        for (int i = 0; i < count; i++)
+        {
+            targets[i] = Enemy.Team[i];
+        }
     }
 
-    public GameObject GetRedTeam(int i)
+    void TimerOperate()
     {
-        return RedTeam[i];
+        if (timeDeliver >= exploreTimer)
+        {
+            ExploreTargetViaDistance(teamNum);
+            timeDeliver = 0.0f;
+            isOperate = true;
+        }
+
+        else 
+        {
+            timeDeliver += Time.deltaTime;
+        }
+
+        Debug.Log(timeDeliver);
+    }
+
+    //Strategy 1 -- the nearest target  
+    public void ExploreTargetViaDistance(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject target = targets[i];
+
+            if (target == null)
+            {
+                nearestTarget = null;
+                continue;
+            }
+
+            targetDist[i] = Vector3.Distance(target.transform.position, this.transform.position);
+
+            if (targetDist[i] < nearestDist)
+            {
+                nearestDist = targetDist[i];
+                nearestTarget = target;   // find the target
+            }
+        }
     }
 }
+
