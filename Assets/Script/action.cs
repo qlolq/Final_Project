@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class action : MonoBehaviour
 {
-    protected GameObject nearestTarget;
-    protected teamManager team_Manager;
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
+    protected GameObject target;
 
     // property
     protected float speed = 2.5f;
@@ -39,8 +38,6 @@ public class action : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        team_Manager = GetComponent<teamManager>();
-
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -53,15 +50,13 @@ public class action : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        nearestTarget = team_Manager.nearestTarget;
-
         switch (curState)
         {
-            case FSMState.Idle: UpdateIdleState(nearestTarget); break;
-            case FSMState.Chase: UpdateChaseState(nearestTarget); break;
-            case FSMState.stAttack: UpdateStAttackState(nearestTarget); break;
-            case FSMState.ndAttack: UpdateNdAttackState(nearestTarget); break;
-            case FSMState.rdAttack: UpdateRdAttackState(nearestTarget); break;
+            case FSMState.Idle: UpdateIdleState(target); break;
+            case FSMState.Chase: UpdateChaseState(target); break;
+            case FSMState.stAttack: UpdateStAttackState(target); break;
+            case FSMState.ndAttack: UpdateNdAttackState(target); break;
+            case FSMState.rdAttack: UpdateRdAttackState(target); break;
 
         }
 
@@ -112,7 +107,7 @@ public class action : MonoBehaviour
 
     protected void UpdateChaseState(GameObject target) 
     {
-        Vector3 movement = CalculateDistance(nearestTarget);
+        Vector3 movement = CalculateDistance(target);
         movement.Normalize();
         this.transform.Translate(movement * speed * Time.deltaTime);
 
@@ -268,6 +263,11 @@ public class action : MonoBehaviour
 
     internal float CalculateMagnitude()
     {
-        return CalculateDistance(nearestTarget).magnitude;
+        return CalculateDistance(target).magnitude;
+    }
+
+    public void ReceiveNearestTarget(GameObject nearestTarget) 
+    {
+        target = nearestTarget;
     }
 }

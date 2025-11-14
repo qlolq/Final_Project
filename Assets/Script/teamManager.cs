@@ -20,7 +20,6 @@ public class teamManager : MonoBehaviour
 
     protected float exploreTimer;
     protected float timeDeliver;
-    protected bool isOperate;
 
     // Start is called before the first frame update
     protected void Start()
@@ -32,9 +31,8 @@ public class teamManager : MonoBehaviour
         targets = new GameObject[teamNum];
         nearestDist = 1000.0f;
 
-        exploreTimer = 5.0f;
-        timeDeliver = 5.0f;
-        isOperate = true;
+        exploreTimer = 2.0f;
+        timeDeliver = 2.0f;
 
         if (this.gameObject.CompareTag("BlueTeam"))
         {
@@ -48,16 +46,15 @@ public class teamManager : MonoBehaviour
 
         CharacterInstantiate(teamTag);
         DetectTeamTag(teamTag);
-        EnemyList(teamNum);
     }
 
     void Update()
     {
-        if (isOperate)
-        {
-            isOperate = false;
-            TimerOperate();
-        }
+        EnemyList(teamNum);
+        TimerOperate();
+        Debug.Log(nearestTarget);
+        Debug.Log(nearestDist);
+
     }
 
     public Vector3[] BlueTeamSpawnLocation(int count)
@@ -133,15 +130,12 @@ public class teamManager : MonoBehaviour
         {
             ExploreTargetViaDistance(teamNum);
             timeDeliver = 0.0f;
-            isOperate = true;
         }
 
-        else 
-        {
+        else {
             timeDeliver += Time.deltaTime;
         }
 
-        Debug.Log(timeDeliver);
     }
 
     //Strategy 1 -- the nearest target  
@@ -149,21 +143,29 @@ public class teamManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject target = targets[i];
+            GameObject meThis = Team[i];
 
-            if (target == null)
+            for (int j = 0; j < count; j++) 
             {
-                nearestTarget = null;
-                continue;
+                GameObject target = targets[j];
+
+                if (target == null)
+                {
+                    nearestTarget = null;
+                    continue;
+                }
+
+                targetDist[j] = Vector3.Distance(target.transform.position, meThis.transform.position);
+
+                if (targetDist[j] < nearestDist)
+                {
+                    nearestDist = targetDist[j];
+                    nearestTarget = target;   // find the target
+                }
             }
 
-            targetDist[i] = Vector3.Distance(target.transform.position, this.transform.position);
-
-            if (targetDist[i] < nearestDist)
-            {
-                nearestDist = targetDist[i];
-                nearestTarget = target;   // find the target
-            }
+            action Action = meThis.GetComponent<action>();
+            Action.ReceiveNearestTarget(nearestTarget);
         }
     }
 }
