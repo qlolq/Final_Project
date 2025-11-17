@@ -4,56 +4,62 @@ using UnityEngine;
 
 public class character_property : MonoBehaviour
 {
-    protected string name;
-    protected int hp;
-    protected int atk;
-    protected int def;
-    protected int satk; //special attack,通常指定為魔法攻擊    
-    protected int sdef; //special defence,通常指定為魔法防禦
-    protected float speed;
-    protected float dex;  //dex是指攻擊速度（攻擊的頻率）
-    protected float atkRange; //攻擊範圍（手長短）只for普通攻擊
-    protected float effectRange; //傷害判定範圍（AOE？單體攻擊？）只for普通攻擊
-                                 //skilltime
-    //public Canvas gameCanvas;
-    //protected Camera mainCamera;
-    //public GameObject hpBarInstance;
-    //protected GameObject HP_show;
-    //protected Vector3 offset = new Vector3(0, -0.7f, 0);
+    internal string name;
+    internal int hp;
+    internal int _hp;
+    internal int atk;
+    internal int def;
+    internal int satk; //special attack,通常指定為魔法攻擊    
+    internal int sdef; //special defence,通常指定為魔法防禦
+    internal float speed;
+    internal float dex;  //dex是指攻擊速度（攻擊的頻率）
+    internal float atkRange; //攻擊範圍（手長短）只for普通攻擊
+    internal float effectRange; //傷害判定範圍（AOE？單體攻擊？）只for普通攻擊
+                                //skilltime
 
-    //protected GameObject hpBar;
-    //protected GameObject hpBarEffect;
+    internal int indDamage;
+    internal int indBurden;
+    internal int indHeal;
+
+    protected GameObject hp_indicator;
 
     // Start is called before the first frame update
     protected void Start()
     {
-        //mainCamera = Camera.main;
-        //HP_show = Instantiate(hpBarInstance, gameCanvas.transform);
+        indDamage = 0;
+        indBurden = 0;
+        indHeal = 0;
 
+        _hp = hp;
+        hpInstantiate();
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        //UpdateHPbarPos();
+
     }
 
-    //void UpdateHPbarPos()
-    //{
-    //    if (mainCamera == null) return;
+    protected void hpInstantiate() 
+    {
+        Transform hpTran = this.transform.Find("hp_indicator");
+        hp_indicator = hpTran.gameObject;
 
-    //    Vector3 targetWorldPos = transform.position + offset;
-    //    Vector2 screenPos = mainCamera.WorldToScreenPoint(targetWorldPos);
+        float hpYPosition = this.transform.position.y - 0.75f;
+        Vector3 hpPos = new Vector3(this.transform.position.x, hpYPosition, 50.0f);
+        hp_indicator.transform.position = hpPos;
+    }
 
-    //    if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-    //        gameCanvas.GetComponent<RectTransform>(),
-    //        screenPos,
-    //        gameCanvas.worldCamera,
-    //        out Vector2 uiPos))
-    //    {
-    //        HP_show.GetComponent<RectTransform>().localPosition = uiPos;
-    //        //Debug.Log("尝试实例化血条：" + (HP_show != null ? "成功" : "失败"));
-    //    }
+    public int Damageable(int damage) 
+    {
+        _hp -= damage;
+        return _hp;
+    }
 
-    //}
+    public int IndicatorDamage(int damage) 
+    {
+        indDamage += damage;
+        return indDamage;
+    }
 }
+

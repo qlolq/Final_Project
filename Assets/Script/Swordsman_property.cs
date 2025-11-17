@@ -16,7 +16,7 @@ public class Swordsman_property : character_property
         def = 20;
         satk = 0;
         sdef = 15;
-        speed = 3.0f;
+        speed = 2.5f;
         //dex;  
         atkRange = 0.8f;
         //effectRange;

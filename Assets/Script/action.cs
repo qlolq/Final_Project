@@ -10,7 +10,7 @@ public class action : MonoBehaviour
     protected GameObject target;
 
     // property
-    protected float speed = 2.5f;
+    protected float speed =2.5f;
 
 
     //animation state
@@ -45,6 +45,8 @@ public class action : MonoBehaviour
         curState = FSMState.Idle;
 
         attackCount = 0;
+        //character_property charP = this.GetComponent<character_property>();
+        //speed = charP.speed;
     }
 
     // Update is called once per frame

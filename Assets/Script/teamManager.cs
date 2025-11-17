@@ -21,6 +21,8 @@ public class teamManager : MonoBehaviour
     protected float exploreTimer;
     protected float timeDeliver;
 
+    protected bool isAlive;
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -29,10 +31,11 @@ public class teamManager : MonoBehaviour
 
         targetDist = new float[teamNum];
         targets = new GameObject[teamNum];
-        nearestDist = 1000.0f;
 
         exploreTimer = 2.0f;
         timeDeliver = 2.0f;
+
+        isAlive = true;
 
         if (this.gameObject.CompareTag("BlueTeam"))
         {
@@ -52,8 +55,8 @@ public class teamManager : MonoBehaviour
     {
         EnemyList(teamNum);
         TimerOperate();
-        Debug.Log(nearestTarget);
-        Debug.Log(nearestDist);
+        //Debug.Log(nearestTarget);
+        //Debug.Log(nearestDist);
 
     }
 
@@ -104,10 +107,12 @@ public class teamManager : MonoBehaviour
         }
     }
 
-/// <summary>
-/// //Team character Property, character Position is defined 
-/// </summary>
-/// <param name="teamTag"></param>
+    /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //Team character Property, character Position is defined 
+    /// </summary>
+    /// <param name="teamTag"></param>
+    /// 
+
     void DetectTeamTag(string teamTag)
     {
         for (int i=0; i<teamNum;i++) 
@@ -138,12 +143,39 @@ public class teamManager : MonoBehaviour
 
     }
 
+    /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //Team character Property, character damage determine
+    /// </summary>
+    /// <param name="Damage"></param>
+    /// 
+
+    public void HealthInitial(int count,GameObject meThis, GameObject target) 
+    {
+        character_property thisCharP = meThis.GetComponent<character_property>();
+        character_property tarCharP = target.GetComponent<character_property>();
+        DamageCalculation(thisCharP, tarCharP);
+    }
+
+    public void DamageCalculation(character_property meThis, character_property target) 
+    {
+        int damage = Mathf.Max(meThis.atk / (target.def + 30), 0);
+        target.Damageable(damage);
+        meThis.IndicatorDamage(damage);
+    }
+
+    /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //Team character Property, Strategy
+    /// </summary>
+    /// <param name="Strategy"></param>
+    /// 
+
     //Strategy 1 -- the nearest target  
     public void ExploreTargetViaDistance(int count)
     {
         for (int i = 0; i < count; i++)
         {
             GameObject meThis = Team[i];
+            nearestDist = 1000.0f;
 
             for (int j = 0; j < count; j++) 
             {
@@ -166,6 +198,8 @@ public class teamManager : MonoBehaviour
 
             action Action = meThis.GetComponent<action>();
             Action.ReceiveNearestTarget(nearestTarget);
+
+            HealthInitial(count, meThis, nearestTarget);
         }
     }
 }
