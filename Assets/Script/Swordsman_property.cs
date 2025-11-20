@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Swordsman_property : character_property
 {
-   
-    // Start is called before the first frame update
-    void Start()
+    void Awake() 
     {
-        base.Start();
-
         name = "Swordsman";
         hp = 456;
         atk = 55;
@@ -18,8 +14,16 @@ public class Swordsman_property : character_property
         sdef = 15;
         speed = 2.5f;
         //dex;  
-        atkRange = 0.8f;
+        atkRange = 0.4f;
         //effectRange;
+        skillPower = new int[] { 15, 18, 22, 60, 125 };
+        base.Awake();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        base.Start();
     }
 
     // Update is called once per frame

@@ -10,16 +10,20 @@ public class action : MonoBehaviour
     protected GameObject target;
 
     // property
-    protected float speed =2.5f;
-
+    protected float speed;
+    protected float attackRange;
 
     //animation state
-    int animationState;
+    internal int animationState;
     int attackCount;
 
     //timer
     float DistTimer = 0f;
     float currentAniLength = 0f;
+
+    //determine
+    internal bool isAttacking;
+    internal bool isAttacked;
 
     //FSM state
     public enum FSMState 
@@ -45,13 +49,28 @@ public class action : MonoBehaviour
         curState = FSMState.Idle;
 
         attackCount = 0;
-        //character_property charP = this.GetComponent<character_property>();
-        //speed = charP.speed;
+        character_property charP = GetComponent<character_property>();
+        speed = charP.speed;
+        attackRange = charP.atkRange;
+
+        isAttacking = false;
+        isAttacked = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (target == null) 
+        {
+            if (curState != FSMState.Idle) 
+            {
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.Idle;
+            }
+            return;
+        }
+
         switch (curState)
         {
             case FSMState.Idle: UpdateIdleState(target); break;
@@ -65,6 +84,8 @@ public class action : MonoBehaviour
         //Debug.Log(curState);
         //Debug.Log(CalculateMagnitude());
         //Debug.Log(attackCount);
+        //Debug.Log("isAttack " + attackCount);
+        //Debug.Log("isAttacked " + isAttacked);
     }
 
     protected void UpdateIdleState(GameObject target)
@@ -83,7 +104,7 @@ public class action : MonoBehaviour
 
         if (DistTimer >= currentAniLength+0.3f) 
         {
-            if (CalculateMagnitude() > 0.4f)  //chase to target if do not arrive
+            if (CalculateMagnitude() > attackRange)  //chase to target if do not arrive
             {
                 animationState = 1;
                 animator.SetInteger("Action", animationState);
@@ -94,7 +115,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (CalculateMagnitude() <= 0.4f)    // attack to target if arrive
+            else if (CalculateMagnitude() <= attackRange)    // attack to target if arrive
             {
                 animationState = 10;
                 animator.SetInteger("Action", animationState);
@@ -123,7 +144,7 @@ public class action : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        if (CalculateMagnitude() <= 0.4f)    // idle for quick stop and then for next action    
+        if (CalculateMagnitude() <= attackRange)    // idle for quick stop and then for next action    
         {
             animationState = 0;
             animator.SetInteger("Action", animationState);
@@ -134,8 +155,8 @@ public class action : MonoBehaviour
 
     protected void UpdateStAttackState(GameObject target) 
     {
-        attackCount=1;
-
+        attackCount = 1;
+        
         if (this.transform.position.x < target.transform.position.x)
         {
             spriteRenderer.flipX = true;
@@ -150,7 +171,7 @@ public class action : MonoBehaviour
 
         if (DistTimer>=currentAniLength + 0.3f) 
         {
-            if (CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            if (CalculateMagnitude() > attackRange)    // idle for quick stop and then for next action    
             {
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
@@ -161,7 +182,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (CalculateMagnitude() <= 0.4f)
+            else if (CalculateMagnitude() <= attackRange)
             {
                 animationState = 11;
                 animator.SetInteger("Action", animationState);
@@ -169,6 +190,7 @@ public class action : MonoBehaviour
                 curState = FSMState.ndAttack;
 
                 DistTimer=0f;
+                attackCount = 0;
                 StartCoroutine(AniLengthDetector());
             }
         }
@@ -176,7 +198,7 @@ public class action : MonoBehaviour
 
     protected void UpdateNdAttackState(GameObject target)
     {
-        attackCount=2;
+        attackCount =2;
 
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -192,7 +214,7 @@ public class action : MonoBehaviour
 
         if (DistTimer >= currentAniLength + 0.3f) 
         {
-            if (CalculateMagnitude() > 0.4f)    // idle for quick stop and then for next action    
+            if (CalculateMagnitude() > attackRange)    // idle for quick stop and then for next action    
             {
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
@@ -200,10 +222,11 @@ public class action : MonoBehaviour
                 curState = FSMState.Idle;
 
                 DistTimer=0f;
+                attackCount = 0;
                 StartCoroutine(AniLengthDetector());
             }
 
-            else if (CalculateMagnitude() <= 0.4f)
+            else if (CalculateMagnitude() <= attackRange)
             {
                 animationState = 12;
                 animator.SetInteger("Action", animationState);
@@ -218,7 +241,7 @@ public class action : MonoBehaviour
 
     protected void UpdateRdAttackState(GameObject target)
     {
-        attackCount=3;
+        attackCount =3;
 
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -242,6 +265,7 @@ public class action : MonoBehaviour
                 curState = FSMState.Idle;
 
                 DistTimer = 0f;
+                attackCount = 0;
                 StartCoroutine(AniLengthDetector());
             }
 
@@ -255,7 +279,11 @@ public class action : MonoBehaviour
         currentAniLength = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// ///////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    /// <param name="Calculate"></param>
+    /// <returns></returns>
     
     Vector3 CalculateDistance(GameObject target)
     {
@@ -268,8 +296,99 @@ public class action : MonoBehaviour
         return CalculateDistance(target).magnitude;
     }
 
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    /// <param name="nearestTarget"></param>
+
     public void ReceiveNearestTarget(GameObject nearestTarget) 
     {
         target = nearestTarget;
+    }
+
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    character_property tarCharP = target.GetComponent<character_property>();
+
+    //    if (target == null) return;
+
+    //    if (tarCharP.atkRange <= 0.5)
+    //    {
+    //        if (collision.gameObject == target)
+    //        {
+    //            isAttacked = true;
+    //        }
+    //    }
+
+    //    else if (tarCharP.atkRange > 0.5) 
+    //    {
+    //        if (collision.gameObject.tag == "Bullet")
+    //        {
+    //            isAttacked = true;
+    //        }
+    //    }
+    //}
+
+    //void OnCollisionExit2D(Collision2D collision) 
+    //{
+    //    if (collision.gameObject == target) 
+    //    {
+    //        isAttacked = false;
+    //    }
+    //}
+
+    void OnTriggerEnter2D(Collider2D collider) 
+    {
+        if (target == null) return;
+        character_property tarCharP = target.GetComponent<character_property>();
+
+        if (tarCharP.atkRange <= 0.5)
+        {
+            if (collider.gameObject == target)
+            {
+                isAttacked = true;
+            }
+        }
+
+        else if (tarCharP.atkRange > 0.5)
+        {
+            if (collider.CompareTag("Bullet"))
+            {
+                isAttacked = true;
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider) 
+    {
+        if (target == null) return;
+
+        if (collider.gameObject == target || collider.CompareTag("Bullet")) 
+        {
+            isAttacked = false;
+        }
+    }
+
+    public bool IsAttacking()
+    {
+        if (attackCount > 0)
+        {
+            return isAttacking = true;
+        }
+
+        else if (attackCount <= 0)
+        {
+            return isAttacking = false;
+        }
+
+        else 
+        {
+            return isAttacking = false;
+        }
+    }
+
+    public bool IsAttacked() 
+    {
+        return isAttacked;
     }
 }

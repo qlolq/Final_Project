@@ -23,6 +23,8 @@ public class teamManager : MonoBehaviour
 
     protected bool isAlive;
 
+    internal int damage = 0;
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -49,6 +51,7 @@ public class teamManager : MonoBehaviour
 
         CharacterInstantiate(teamTag);
         DetectTeamTag(teamTag);
+        GiveName(teamTag);
     }
 
     void Update()
@@ -57,7 +60,7 @@ public class teamManager : MonoBehaviour
         TimerOperate();
         //Debug.Log(nearestTarget);
         //Debug.Log(nearestDist);
-
+        //Debug.Log(damage);
     }
 
     public Vector3[] BlueTeamSpawnLocation(int count)
@@ -121,6 +124,15 @@ public class teamManager : MonoBehaviour
         }
     }
 
+    void GiveName(string teamTag) 
+    {
+        for (int i = 0; i < teamNum; i++) 
+        {
+            character_property charP = Team[i].GetComponent<character_property>();
+            Team[i].name = $"{teamTag}_{charP.name}";
+        }
+    }
+
     void EnemyList(int count)
     {
         for (int i = 0; i < count; i++)
@@ -153,12 +165,25 @@ public class teamManager : MonoBehaviour
     {
         character_property thisCharP = meThis.GetComponent<character_property>();
         character_property tarCharP = target.GetComponent<character_property>();
-        DamageCalculation(thisCharP, tarCharP);
+        action thisA = meThis.GetComponent<action>();
+        action tarA = target.GetComponent<action>();
+
+        if (thisA.IsAttacking()) 
+        {
+            thisA.isAttacking = false;
+
+            if (tarA.IsAttacked())
+            {
+                DamageCalculation(thisCharP, tarCharP,thisA,tarA);
+            }
+        }
     }
 
-    public void DamageCalculation(character_property meThis, character_property target) 
+    public void DamageCalculation(character_property meThis, character_property target, action thisA, action tarA) 
     {
-        int damage = Mathf.Max(meThis.atk / (target.def + 30), 0);
+        int i = thisA.animationState - 10;
+
+        damage = Mathf.Max(meThis.skillPower[i] * meThis.atk / (target.def + 10), 0);
         target.Damageable(damage);
         meThis.IndicatorDamage(damage);
     }

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Triangle_property : character_property
 {
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        base.Start();
-
         name = "Triangle";
         hp = 600;
         atk = 0;
@@ -17,8 +14,16 @@ public class Triangle_property : character_property
         sdef = 40;
         speed = 3.0f;
         //dex;  
-        atkRange = 0.8f;
+        atkRange = 0.0f;
         //effectRange;
+
+        base.Awake();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        base.Start();
     }
 
     // Update is called once per frame
