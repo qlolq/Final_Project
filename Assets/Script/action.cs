@@ -6,6 +6,7 @@ using UnityEngine;
 public class action : MonoBehaviour
 {
     protected Animator animator;
+    protected AnimatorStateInfo currentAniState;
     protected SpriteRenderer spriteRenderer;
     protected GameObject target;
 
@@ -24,6 +25,7 @@ public class action : MonoBehaviour
     //determine
     internal bool isAttacking;
     internal bool isAttacked;
+    //private bool triggerAttackOn = false; 
 
     //FSM state
     public enum FSMState 
@@ -86,6 +88,7 @@ public class action : MonoBehaviour
         //Debug.Log(attackCount);
         //Debug.Log("isAttack " + attackCount);
         //Debug.Log("isAttacked " + isAttacked);
+        //Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
     }
 
     protected void UpdateIdleState(GameObject target)
@@ -112,7 +115,7 @@ public class action : MonoBehaviour
                 curState = FSMState.Chase;
 
                 DistTimer = 0f;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
 
             else if (CalculateMagnitude() <= attackRange)    // attack to target if arrive
@@ -123,7 +126,7 @@ public class action : MonoBehaviour
                 curState = FSMState.stAttack;
 
                 DistTimer = 0f;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
         }
     }
@@ -150,13 +153,13 @@ public class action : MonoBehaviour
             animator.SetInteger("Action", animationState);
 
             curState = FSMState.Idle;
+            StartCoroutine(AniLengthDetector(animationState));
         }
     }
 
     protected void UpdateStAttackState(GameObject target) 
     {
-        attackCount = 1;
-        
+
         if (this.transform.position.x < target.transform.position.x)
         {
             spriteRenderer.flipX = true;
@@ -166,6 +169,13 @@ public class action : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        //ReceiveAnimatorTime();
+        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn) 
+        //{
+        //    attackCount = 1;
+        //    triggerAttackOn = true;
+        //}
 
         DistTimer += Time.deltaTime;
 
@@ -179,7 +189,7 @@ public class action : MonoBehaviour
                 curState = FSMState.Idle;
 
                 DistTimer=0f;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
 
             else if (CalculateMagnitude() <= attackRange)
@@ -189,16 +199,16 @@ public class action : MonoBehaviour
 
                 curState = FSMState.ndAttack;
 
-                DistTimer=0f;
+                //triggerAttackOn = false;
+                DistTimer =0f;
                 attackCount = 0;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
         }
     }
 
     protected void UpdateNdAttackState(GameObject target)
     {
-        attackCount =2;
 
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -209,6 +219,13 @@ public class action : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        //ReceiveAnimatorTime();
+        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn)
+        //{
+        //    triggerAttackOn = true;
+        //    attackCount = 2;
+        //}
 
         DistTimer +=Time.deltaTime;
 
@@ -223,7 +240,7 @@ public class action : MonoBehaviour
 
                 DistTimer=0f;
                 attackCount = 0;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
 
             else if (CalculateMagnitude() <= attackRange)
@@ -233,15 +250,15 @@ public class action : MonoBehaviour
 
                 curState = FSMState.rdAttack;
 
+                //triggerAttackOn = false;
                 DistTimer = 0f;
-                StartCoroutine(AniLengthDetector());
+                StartCoroutine(AniLengthDetector(animationState));
             }
         }
     }
 
     protected void UpdateRdAttackState(GameObject target)
     {
-        attackCount =3;
 
         if (this.transform.position.x < target.transform.position.x)
         {
@@ -252,6 +269,13 @@ public class action : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        //ReceiveAnimatorTime();
+        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn)
+        //{
+        //    triggerAttackOn = true;
+        //    attackCount = 3;
+        //}
 
         DistTimer += Time.deltaTime;
 
@@ -264,19 +288,46 @@ public class action : MonoBehaviour
 
                 curState = FSMState.Idle;
 
+               //triggerAttackOn = false;
                 DistTimer = 0f;
-                attackCount = 0;
-                StartCoroutine(AniLengthDetector());
+                //attackCount = 0;
+                StartCoroutine(AniLengthDetector(animationState));
             }
 
         }
 
     }
 
-    IEnumerator AniLengthDetector()
+    IEnumerator AniLengthDetector(int animationState)
     {
         yield return null;
-        currentAniLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        ReceiveAnimatorTime();
+
+        while (true) 
+        {
+            if (animator.GetInteger("Action") == animationState)
+            {
+                currentAniLength = currentAniState.length;
+                if (animationState > 9 && animationState <= 12)
+                {
+                    if (currentAniLength >= currentAniLength*0.6f)
+                    {
+                        attackCount = animationState - 9;
+                    }
+                }
+
+                else 
+                {
+                    attackCount = 0;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    void ReceiveAnimatorTime() 
+    {
+        currentAniState = animator.GetCurrentAnimatorStateInfo(0);
     }
 
     /// <summary>
@@ -284,7 +335,7 @@ public class action : MonoBehaviour
     /// </summary>
     /// <param name="Calculate"></param>
     /// <returns></returns>
-    
+
     Vector3 CalculateDistance(GameObject target)
     {
         Vector3 fD = target.transform.position - this.transform.position;

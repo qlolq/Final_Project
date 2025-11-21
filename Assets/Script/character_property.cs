@@ -109,18 +109,22 @@ public class character_property : MonoBehaviour
 
         if (hp_Effect.transform.localScale.x > hp_Full.transform.localScale.x && coroutineOperating == false)
         {
-            StartCoroutine(HpBarEffectMovement());
+            StartCoroutine(HpBarEffectMovement(hp_Full.transform.localScale, hp_Effect.transform.localScale));
         }
     }
 
-    IEnumerator HpBarEffectMovement()
+    IEnumerator HpBarEffectMovement(Vector3 targetScale, Vector3 startScale)
     {
         coroutineOperating = true;
 
-        float delay = 1.0f;
+        float delay = 1.5f;
         yield return new WaitForSeconds(delay);
 
+        hp_Effect.transform.localScale = Vector3.Lerp(startScale, targetScale, 0.01f * Time.deltaTime);
         coroutineOperating = false;
+        yield return null;
+
+        hp_Effect.transform.localScale = targetScale;
     }
 
 }
