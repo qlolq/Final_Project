@@ -9,6 +9,7 @@ public class action : MonoBehaviour
     protected AnimatorStateInfo currentAniState;
     protected SpriteRenderer spriteRenderer;
     protected GameObject target;
+    protected character_property charP;
 
     // property
     protected float speed;
@@ -51,7 +52,7 @@ public class action : MonoBehaviour
         curState = FSMState.Idle;
 
         attackCount = 0;
-        character_property charP = GetComponent<character_property>();
+        charP = GetComponent<character_property>();
         speed = charP.speed;
         attackRange = charP.atkRange;
 
@@ -73,6 +74,11 @@ public class action : MonoBehaviour
             return;
         }
 
+        if (charP._hp <=0 && curState != FSMState.Dead) 
+        {
+            curState = FSMState.Dead;
+        }
+
         switch (curState)
         {
             case FSMState.Idle: UpdateIdleState(target); break;
@@ -80,7 +86,7 @@ public class action : MonoBehaviour
             case FSMState.stAttack: UpdateStAttackState(target); break;
             case FSMState.ndAttack: UpdateNdAttackState(target); break;
             case FSMState.rdAttack: UpdateRdAttackState(target); break;
-
+            case FSMState.Dead: UpdateDeadState(); break;
         }
 
         //Debug.Log(curState);
@@ -298,6 +304,13 @@ public class action : MonoBehaviour
 
     }
 
+    protected void UpdateDeadState() 
+    {
+        Vector3 deadPos = new Vector3(300.0f, 0, 0f); 
+        this.transform.position = deadPos;
+        curState = FSMState.Idle;
+    }
+
     IEnumerator AniLengthDetector(int animationState)
     {
         yield return null;
@@ -357,43 +370,12 @@ public class action : MonoBehaviour
         target = nearestTarget;
     }
 
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    character_property tarCharP = target.GetComponent<character_property>();
-
-    //    if (target == null) return;
-
-    //    if (tarCharP.atkRange <= 0.5)
-    //    {
-    //        if (collision.gameObject == target)
-    //        {
-    //            isAttacked = true;
-    //        }
-    //    }
-
-    //    else if (tarCharP.atkRange > 0.5) 
-    //    {
-    //        if (collision.gameObject.tag == "Bullet")
-    //        {
-    //            isAttacked = true;
-    //        }
-    //    }
-    //}
-
-    //void OnCollisionExit2D(Collision2D collision) 
-    //{
-    //    if (collision.gameObject == target) 
-    //    {
-    //        isAttacked = false;
-    //    }
-    //}
-
     void OnTriggerEnter2D(Collider2D collider) 
     {
         if (target == null) return;
         character_property tarCharP = target.GetComponent<character_property>();
 
-        if (tarCharP.atkRange <= 0.5)
+        if (tarCharP.atkRange <= 0.5f)
         {
             if (collider.gameObject == target)
             {
@@ -401,7 +383,7 @@ public class action : MonoBehaviour
             }
         }
 
-        else if (tarCharP.atkRange > 0.5)
+        else if (tarCharP.atkRange > 0.5f)
         {
             if (collider.CompareTag("Bullet"))
             {

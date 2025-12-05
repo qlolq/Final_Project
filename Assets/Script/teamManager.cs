@@ -11,7 +11,9 @@ public class teamManager : MonoBehaviour
     private Vector3 [] RandPos;
     private string teamTag;
 
-    [SerializeField] private GameObject character;
+    [SerializeField] private GameObject character_1;
+    [SerializeField] private GameObject character_2;
+
 
     protected float[] targetDist;
     protected GameObject[] targets;
@@ -106,7 +108,15 @@ public class teamManager : MonoBehaviour
         for (int i = 0; i < teamNum; i++)
         {
             Vector3 teamPos = RandPos[i];
-            Team[i] = Instantiate(character, teamPos, Quaternion.identity);
+
+            if (i == 0)
+            {
+                Team[i] = Instantiate(character_1, teamPos, Quaternion.identity);
+            }
+            else if (i == 1)
+            {
+                Team[i] = Instantiate(character_2, teamPos, Quaternion.identity);
+            }
         }
     }
 
@@ -200,7 +210,7 @@ public class teamManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             GameObject meThis = Team[i];
-            nearestDist = 1000.0f;
+            nearestDist = 300.0f;
 
             for (int j = 0; j < count; j++) 
             {

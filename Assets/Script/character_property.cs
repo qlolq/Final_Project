@@ -28,6 +28,12 @@ public class character_property : MonoBehaviour
     protected GameObject hp_Effect;
     private bool coroutineOperating;
 
+    //private MeshRenderer meshRenderer;
+    //private int materialCount;
+    //private Material[] materials;
+    //public Material getDamageMaterial;
+    //private Material[] normalMaterials;
+
     protected void Awake() 
     {
         indDamage = 0;
@@ -37,6 +43,15 @@ public class character_property : MonoBehaviour
         _hp = hp;
         coroutineOperating = false;
         hpInstantiate();
+
+        //meshRenderer = GetComponent<MeshRenderer>();
+        //materialCount = meshRenderer.materials.Length;
+        //materials = new Material[materialCount];
+        //normalMaterials = meshRenderer.materials;
+        //for (int i = 0; i < materialCount; i++)
+        //{
+        //    materials[i] = normalMaterials[i];
+        //}
     }
 
     // Start is called before the first frame update
@@ -48,6 +63,7 @@ public class character_property : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+
     }
 
     protected void hpInstantiate() 
@@ -91,6 +107,8 @@ public class character_property : MonoBehaviour
         }
 
         HealthBarEffect(damage);
+        IndicatorBurden(damage);
+        //DamageFeedback();
         return _hp;
     }
 
@@ -98,6 +116,12 @@ public class character_property : MonoBehaviour
     {
         indDamage += damage;
         return indDamage;
+    }
+
+    public int IndicatorBurden(int damage)
+    {
+        indBurden += damage;
+        return indBurden;
     }
 
     void HealthBarEffect(int damage) 
@@ -127,5 +151,26 @@ public class character_property : MonoBehaviour
         hp_Effect.transform.localScale = targetScale;
     }
 
+    //void DamageFeedback()
+    //{
+    //    for (int i = 0; i < materialCount; i++)
+    //    {
+    //        materials[i] = getDamageMaterial;
+    //    }
+    //    meshRenderer.materials = materials;
+
+    //    StartCoroutine(ReturnNormalMaterial());
+    //}
+
+    //IEnumerator ReturnNormalMaterial()
+    //{
+    //    float delay = 0.5f;
+    //    yield return new WaitForSeconds(delay);
+    //    for (int i = 0; i < materialCount; i++)
+    //    {
+    //        materials[i] = normalMaterials[i];
+    //    }
+    //    meshRenderer.materials = materials;
+    //}
 }
 
