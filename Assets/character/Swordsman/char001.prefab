@@ -185,7 +185,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.1, y: 1}
+  m_Size: {x: 2.1, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &8260843047408428259
 MonoBehaviour:
@@ -211,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09b5b7e11e9e36479cee09139359ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getDamageMaterial: {fileID: 2100000, guid: 906c79070241ec54f80df2e55c67d600, type: 2}
 --- !u!1001 &4861151898620626701
 PrefabInstance:
   m_ObjectHideFlags: 0

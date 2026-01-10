@@ -71,7 +71,7 @@ public class teamManager : MonoBehaviour
 
         float BlueminX = -5.3f;
         float BluemaxX = -1.0f;
-        float BlueminY = -3.0f;
+        float BlueminY = -2.5f;
         float BluemaxY = 3.0f;
 
         for (int i = 0; i < count; i++)
@@ -90,7 +90,7 @@ public class teamManager : MonoBehaviour
 
         float RedminX = 1.0f;
         float RedmaxX = 5.3f;
-        float RedminY = -3.0f;
+        float RedminY = -2.5f;
         float RedmaxY = 3.0f;
 
         for (int i = 0; i < count; i++)
@@ -178,14 +178,11 @@ public class teamManager : MonoBehaviour
         action thisA = meThis.GetComponent<action>();
         action tarA = target.GetComponent<action>();
 
-        if (thisA.IsAttacking()) 
-        {
-            thisA.isAttacking = false;
 
-            if (tarA.IsAttacked())
-            {
-                DamageCalculation(thisCharP, tarCharP,thisA,tarA);
-            }
+        if (thisA.IsAttacking() && tarA.IsAttacked()) 
+        {
+            DamageCalculation(thisCharP, tarCharP, thisA, tarA);
+            thisA.isAttacking = false;
         }
     }
 
@@ -196,6 +193,7 @@ public class teamManager : MonoBehaviour
         damage = Mathf.Max(meThis.skillPower[i] * meThis.atk / (target.def + 10), 0);
         target.Damageable(damage);
         meThis.IndicatorDamage(damage);
+        target.IndicatorBurden(damage);
     }
 
     /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

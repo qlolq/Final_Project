@@ -107,7 +107,6 @@ public class character_property : MonoBehaviour
         }
 
         HealthBarEffect(damage);
-        IndicatorBurden(damage);
         //DamageFeedback();
         return _hp;
     }
@@ -127,7 +126,7 @@ public class character_property : MonoBehaviour
     void HealthBarEffect(int damage) 
     {
         float currentHpRatio = (float)_hp / hp;
-        Debug.Log($"{_hp} + {currentHpRatio:F2}");
+        //Debug.Log($"{_hp} + {currentHpRatio:F2}");
 
         hp_Full.transform.localScale = new Vector3(currentHpRatio, 1f, 1f);
 
@@ -141,7 +140,7 @@ public class character_property : MonoBehaviour
     {
         coroutineOperating = true;
 
-        float delay = 1.5f;
+        float delay = 0.5f;
         yield return new WaitForSeconds(delay);
 
         hp_Effect.transform.localScale = Vector3.Lerp(startScale, targetScale, 0.01f * Time.deltaTime);

@@ -679,7 +679,7 @@ MonoBehaviour:
   Enemy: {fileID: 1751571716}
   teamNum: 2
   character_1: {fileID: 4220550761378826047, guid: 92db71640ae113e41bbb9e8d2a12fb7e, type: 3}
-  character_2: {fileID: 2619977604178787013, guid: ca19949ed692dec4ebb276dd214fa622, type: 3}
+  character_2: {fileID: 2036005981543792989, guid: b25d6b309c3b8a04480882fbb34a4275, type: 3}
 --- !u!1 &34154462
 GameObject:
   m_ObjectHideFlags: 0
@@ -16065,7 +16065,7 @@ Transform:
   m_GameObject: {fileID: 1051290529}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.198073, y: 0.7043226, z: -0.051928554}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

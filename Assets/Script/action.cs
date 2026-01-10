@@ -27,7 +27,7 @@ public class action : MonoBehaviour
     internal bool isAttacking;
     internal bool isAttacked;
     //private bool triggerAttackOn = false; 
-
+    
     //FSM state
     public enum FSMState 
     {
@@ -189,6 +189,25 @@ public class action : MonoBehaviour
         {
             if (CalculateMagnitude() > attackRange)    // idle for quick stop and then for next action    
             {
+                if (attackRange > 1.0f) 
+                {
+                    Bullet bullet = GetComponent<Bullet>();
+                    bullet.BulletInstantiate();
+
+                    Vector3 movement = CalculateDistance(target);
+                    movement.Normalize();
+                    bullet.transform.Translate(movement * speed * 2 * Time.deltaTime);
+                    if (bullet.transform.position.x < target.transform.position.x)
+                    {
+                        spriteRenderer.flipX = true;
+                    }
+
+                    else
+                    {
+                        spriteRenderer.flipX = false;
+                    }
+                }
+
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
 
@@ -306,7 +325,16 @@ public class action : MonoBehaviour
 
     protected void UpdateDeadState() 
     {
-        Vector3 deadPos = new Vector3(300.0f, 0, 0f); 
+        Vector3 deadPos = new Vector3 (0f, 0f, 0f);
+        if (this.CompareTag("BlueTeam"))
+        {
+            deadPos = new Vector3(300, 0, 0f);
+        }
+
+        else 
+        {
+            deadPos = new Vector3(-300.0f, 0, 0f);
+        }
         this.transform.position = deadPos;
         curState = FSMState.Idle;
     }
@@ -349,7 +377,7 @@ public class action : MonoBehaviour
     /// <param name="Calculate"></param>
     /// <returns></returns>
 
-    Vector3 CalculateDistance(GameObject target)
+    public Vector3 CalculateDistance(GameObject target)
     {
         Vector3 fD = target.transform.position - this.transform.position;
         return fD;
@@ -374,6 +402,8 @@ public class action : MonoBehaviour
     {
         if (target == null) return;
         character_property tarCharP = target.GetComponent<character_property>();
+        action tarAct = target.GetComponent<action>();
+
 
         if (tarCharP.atkRange <= 0.5f)
         {
