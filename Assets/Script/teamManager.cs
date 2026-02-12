@@ -36,7 +36,7 @@ public class teamManager : MonoBehaviour
         targetDist = new float[teamNum];
         targets = new GameObject[teamNum];
 
-        exploreTimer = 2.0f;
+        exploreTimer = 1.3f;
         timeDeliver = 2.0f;
 
         isAlive = true;
@@ -177,7 +177,6 @@ public class teamManager : MonoBehaviour
         character_property tarCharP = target.GetComponent<character_property>();
         action thisA = meThis.GetComponent<action>();
         action tarA = target.GetComponent<action>();
-
 
         if (thisA.IsAttacking() && tarA.IsAttacked()) 
         {

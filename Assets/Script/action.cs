@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using static action;
@@ -89,12 +90,12 @@ public class action : MonoBehaviour
             case FSMState.Dead: UpdateDeadState(); break;
         }
 
-        //Debug.Log(curState);
-        //Debug.Log(CalculateMagnitude());
-        //Debug.Log(attackCount);
-        //Debug.Log("isAttack " + attackCount);
-        //Debug.Log("isAttacked " + isAttacked);
-        //Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
+        // Debug.Log(curState);
+        // Debug.Log(CalculateMagnitude());
+        // Debug.Log(attackCount);
+        // Debug.Log("isAttack " + attackCount);
+        // Debug.Log("isAttacked " + isAttacked);
+        // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
     }
 
     protected void UpdateIdleState(GameObject target)
@@ -295,13 +296,6 @@ public class action : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        //ReceiveAnimatorTime();
-        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn)
-        //{
-        //    triggerAttackOn = true;
-        //    attackCount = 3;
-        //}
-
         DistTimer += Time.deltaTime;
 
         if (DistTimer >= currentAniLength + 0.3f) 
@@ -343,27 +337,21 @@ public class action : MonoBehaviour
     {
         yield return null;
         ReceiveAnimatorTime();
-
-        while (true) 
+        
+        if (animator.GetInteger("Action") == animationState)
         {
-            if (animator.GetInteger("Action") == animationState)
+            currentAniLength = currentAniState.length;
+            if (animationState > 9 && animationState <= 12)
             {
-                currentAniLength = currentAniState.length;
-                if (animationState > 9 && animationState <= 12)
-                {
-                    if (currentAniLength >= currentAniLength*0.6f)
-                    {
-                        attackCount = animationState - 9;
-                    }
-                }
-
-                else 
-                {
-                    attackCount = 0;
-                }
+                attackCount = animationState - 9;
             }
-            yield return null;
+
+            else 
+            {
+                attackCount = 0;
+            }
         }
+        yield return null;
     }
 
     void ReceiveAnimatorTime() 
@@ -404,12 +392,12 @@ public class action : MonoBehaviour
         character_property tarCharP = target.GetComponent<character_property>();
         action tarAct = target.GetComponent<action>();
 
-
-        if (tarCharP.atkRange <= 0.5f)
+        if(tarCharP.atkRange <= 0.5f) 
         {
             if (collider.gameObject == target)
             {
-                isAttacked = true;
+                Debug.Log("Attacked");
+                this.isAttacked = true;
             }
         }
 
@@ -417,7 +405,7 @@ public class action : MonoBehaviour
         {
             if (collider.CompareTag("Bullet"))
             {
-                isAttacked = true;
+                tarAct.isAttacked = true;
             }
         }
     }
@@ -434,20 +422,8 @@ public class action : MonoBehaviour
 
     public bool IsAttacking()
     {
-        if (attackCount > 0)
-        {
-            return isAttacking = true;
-        }
-
-        else if (attackCount <= 0)
-        {
-            return isAttacking = false;
-        }
-
-        else 
-        {
-            return isAttacking = false;
-        }
+        this.isAttacking = (animationState >= 10 && animationState <= 12);
+        return isAttacking;
     }
 
     public bool IsAttacked() 
