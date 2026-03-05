@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 //using static action;
 
@@ -9,8 +10,11 @@ public class action : MonoBehaviour
     protected Animator animator;
     protected AnimatorStateInfo currentAniState;
     protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer bulletRenderer;
     protected GameObject target;
     protected character_property charP;
+
+    public GameObject bulletStartPos;
 
     // property
     protected float speed;
@@ -23,11 +27,10 @@ public class action : MonoBehaviour
     //timer
     float DistTimer = 0f;
     float currentAniLength = 0f;
+    float IsFireTimer = -1.5f;
 
     //determine
     internal bool isAttacking;
-    internal bool isAttacked;
-    //private bool triggerAttackOn = false; 
     
     //FSM state
     public enum FSMState 
@@ -58,7 +61,6 @@ public class action : MonoBehaviour
         attackRange = charP.atkRange;
 
         isAttacking = false;
-        isAttacked = false;
     }
 
     // Update is called once per frame
@@ -96,19 +98,13 @@ public class action : MonoBehaviour
         // Debug.Log("isAttack " + attackCount);
         // Debug.Log("isAttacked " + isAttacked);
         // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
+        // Debug.Log(this.attackRange);
+
     }
 
     protected void UpdateIdleState(GameObject target)
     {
-        if (this.transform.position.x < target.transform.position.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+        SpriteToFilp();
 
         DistTimer += Time.deltaTime;
 
@@ -144,15 +140,7 @@ public class action : MonoBehaviour
         movement.Normalize();
         this.transform.Translate(movement * speed * Time.deltaTime);
 
-        if (this.transform.position.x < target.transform.position.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+        SpriteToFilp();
 
         if (CalculateMagnitude() <= attackRange)    // idle for quick stop and then for next action    
         {
@@ -166,49 +154,14 @@ public class action : MonoBehaviour
 
     protected void UpdateStAttackState(GameObject target) 
     {
-
-        if (this.transform.position.x < target.transform.position.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
-
-        //ReceiveAnimatorTime();
-        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn) 
-        //{
-        //    attackCount = 1;
-        //    triggerAttackOn = true;
-        //}
+        SpriteToFilp();
 
         DistTimer += Time.deltaTime;
 
         if (DistTimer>=currentAniLength + 0.3f) 
-        {
+        {                
             if (CalculateMagnitude() > attackRange)    // idle for quick stop and then for next action    
             {
-                if (attackRange > 1.0f) 
-                {
-                    Bullet bullet = GetComponent<Bullet>();
-                    bullet.BulletInstantiate();
-
-                    Vector3 movement = CalculateDistance(target);
-                    movement.Normalize();
-                    bullet.transform.Translate(movement * speed * 2 * Time.deltaTime);
-                    if (bullet.transform.position.x < target.transform.position.x)
-                    {
-                        spriteRenderer.flipX = true;
-                    }
-
-                    else
-                    {
-                        spriteRenderer.flipX = false;
-                    }
-                }
-
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
 
@@ -235,23 +188,7 @@ public class action : MonoBehaviour
 
     protected void UpdateNdAttackState(GameObject target)
     {
-
-        if (this.transform.position.x < target.transform.position.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
-
-        //ReceiveAnimatorTime();
-        //if (currentAniState.normalizedTime >= 0.7f && !triggerAttackOn)
-        //{
-        //    triggerAttackOn = true;
-        //    attackCount = 2;
-        //}
+        SpriteToFilp();
 
         DistTimer +=Time.deltaTime;
 
@@ -285,16 +222,7 @@ public class action : MonoBehaviour
 
     protected void UpdateRdAttackState(GameObject target)
     {
-
-        if (this.transform.position.x < target.transform.position.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+        SpriteToFilp();
 
         DistTimer += Time.deltaTime;
 
@@ -376,6 +304,24 @@ public class action : MonoBehaviour
         return CalculateDistance(target).magnitude;
     }
 
+    internal void SpriteToFilp()
+    {
+        if (this.transform.position.x < target.transform.position.x)
+        {
+            spriteRenderer.flipX = true;
+            bulletRenderer.flipX = false;
+            bulletStartPos.transform.position = new Vector3(this.transform.position.x+0.5f,this.transform.position.y+0.2f, this.transform.position.z);
+        }
+
+        else
+        {
+            spriteRenderer.flipX = false;
+            bulletRenderer.flipX = true;
+            bulletStartPos.transform.position = new Vector3(this.transform.position.x-0.5f,this.transform.position.y+0.2f, this.transform.position.z);
+
+        }
+    }
+
     /// <summary>
     /// ////////////////////////////////////////////////////////////////////////////
     /// </summary>
@@ -386,48 +332,80 @@ public class action : MonoBehaviour
         target = nearestTarget;
     }
 
-    void OnTriggerEnter2D(Collider2D collider) 
-    {
-        if (target == null) return;
-        character_property tarCharP = target.GetComponent<character_property>();
-        action tarAct = target.GetComponent<action>();
+    // void OnTriggerEnter2D(Collider2D collider) 
+    // {
+    //     // Debug.Log("Triggered");
+    //     if (target == null) return;
+    //     character_property tarCharP = target.GetComponent<character_property>();
+    //     action tarAct = target.GetComponent<action>();
 
-        if(tarCharP.atkRange <= 0.5f) 
+    //     if(tarCharP.atkRange <= 0.5f) 
+    //     {
+    //         if (collider.gameObject == target)
+    //         {
+    //             this.isAttacked = true;
+    //         }
+    //     }
+
+    //     if (tarCharP.atkRange > 0.5f)
+    //     {
+    //                 // Debug.Log("Triggered,Bullet");
+    //         if (collider.CompareTag("Bullet"))
+    //         {
+    //             this.isAttacked = true;
+    //             Bullet bullet = collider.GetComponent<Bullet>();
+    //             bullet.BulletDistroy();
+    //         }
+    //     }
+    // }
+
+    // void OnTriggerExit2D(Collider2D collider) 
+    // {
+    //     if (target == null) return;
+
+    //     if (collider.gameObject == target || collider.CompareTag("Bullet")) 
+    //     {
+    //         isAttacked = false;
+    //     }
+    // }
+
+    public void IsAttacking()
+    {
+        if(DistTimer >= currentAniLength)
         {
-            if (collider.gameObject == target)
+            if(animationState >= 10 && animationState <= 14)
             {
-                Debug.Log("Attacked");
-                this.isAttacked = true;
+                if(attackRange <= 0.5f)
+                {
+                    isAttacking = true;
+                }
+
+                else if(attackRange>0.5f)
+                {
+                    IsFire();
+                }
+
+                else
+                {
+                    isAttacking = false;
+                }
             }
         }
+    }
 
-        else if (tarCharP.atkRange > 0.5f)
+    public bool IsFire() 
+    {
+        IsFireTimer += Time.deltaTime;
+        if(IsFireTimer >= currentAniLength + 0.3f)
         {
-            if (collider.CompareTag("Bullet"))
-            {
-                tarAct.isAttacked = true;
-            }
+            IsFireTimer = 0f;
+            return true;
         }
+        return false;
     }
 
-    void OnTriggerExit2D(Collider2D collider) 
+    public GameObject returnTarget()
     {
-        if (target == null) return;
-
-        if (collider.gameObject == target || collider.CompareTag("Bullet")) 
-        {
-            isAttacked = false;
-        }
-    }
-
-    public bool IsAttacking()
-    {
-        this.isAttacking = (animationState >= 10 && animationState <= 12);
-        return isAttacking;
-    }
-
-    public bool IsAttacked() 
-    {
-        return isAttacked;
+        return target;
     }
 }

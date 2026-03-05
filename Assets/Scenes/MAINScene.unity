@@ -679,8 +679,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 1751571716}
   teamNum: 2
-  character_1: {fileID: 4220550761378826047, guid: 92db71640ae113e41bbb9e8d2a12fb7e, type: 3}
-  character_2: {fileID: 2036005981543792989, guid: b25d6b309c3b8a04480882fbb34a4275, type: 3}
+  character_1: {fileID: 3488411685498279745, guid: f3d8113e63a791842a0d8170a1111105, type: 3}
+  character_2: {fileID: 3488411685498279745, guid: f3d8113e63a791842a0d8170a1111105, type: 3}
 --- !u!1 &34154462
 GameObject:
   m_ObjectHideFlags: 0
@@ -25106,8 +25106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 30313075}
   teamNum: 2
-  character_1: {fileID: 2619977604178787013, guid: ca19949ed692dec4ebb276dd214fa622, type: 3}
-  character_2: {fileID: 4220550761378826047, guid: 92db71640ae113e41bbb9e8d2a12fb7e, type: 3}
+  character_1: {fileID: 3488411685498279745, guid: f3d8113e63a791842a0d8170a1111105, type: 3}
+  character_2: {fileID: 3488411685498279745, guid: f3d8113e63a791842a0d8170a1111105, type: 3}
 --- !u!1 &1752272092
 GameObject:
   m_ObjectHideFlags: 0

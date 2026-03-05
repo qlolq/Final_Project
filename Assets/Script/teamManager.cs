@@ -22,9 +22,7 @@ public class teamManager : MonoBehaviour
 
     protected float exploreTimer;
     protected float timeDeliver;
-
     protected bool isAlive;
-
     internal int damage = 0;
 
     // Start is called before the first frame update
@@ -36,8 +34,8 @@ public class teamManager : MonoBehaviour
         targetDist = new float[teamNum];
         targets = new GameObject[teamNum];
 
-        exploreTimer = 1.3f;
-        timeDeliver = 2.0f;
+        exploreTimer = 0.3f;
+        timeDeliver = 0.5f;
 
         isAlive = true;
 
@@ -178,7 +176,7 @@ public class teamManager : MonoBehaviour
         action thisA = meThis.GetComponent<action>();
         action tarA = target.GetComponent<action>();
 
-        if (thisA.IsAttacking() && tarA.IsAttacked()) 
+        if (thisA.isAttacking) 
         {
             DamageCalculation(thisCharP, tarCharP, thisA, tarA);
             thisA.isAttacking = false;

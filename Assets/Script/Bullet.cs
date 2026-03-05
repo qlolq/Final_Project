@@ -1,32 +1,64 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Bullet : MonoBehaviour
 {
-    public GameObject oner;
-    private GameObject bullet;
-    private GameObject target;
+    
+    //bullet
+    public GameObject startPos;
+    public GameObject bulletPrefab;
+    protected GameObject bullet;
+    public action thisA;
+    private bool isFire = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
-    }
+        
+    }   
 
     // Update is called once per frame
     void Update()
     {
 
+        isFire = thisA.IsFire();
+        
+        if(isFire)
+        {
+            BulletInstantiate();
+        }
+
+
     }
 
     public void BulletInstantiate() 
     {
-        Vector3 newPos = new Vector3(0.75f, 0.45f, 0);
-        bullet = Instantiate(this.gameObject, newPos, Quaternion.identity);
+        bullet = Instantiate(bulletPrefab, startPos.transform.position, Quaternion.identity);
+        BulletMove();
+
+        GameObject target = thisA.returnTarget();
+        if(target.tag=="RedTeam")
+        {
+            bullet.tag = "BlueTeam";
+        }
+
+        else
+        {
+            bullet.tag = "RedTeam";
+        }
     }
 
-    public void BulletDistroy() 
+    public void BulletMove()
     {
-        Destroy(this.gameObject);
+        GameObject target = thisA.returnTarget();
+        Vector2 dist = target.transform.position - startPos.transform.position;
+        bullet.GetComponent<Rigidbody2D>().velocity = dist.normalized * 2.0f;
     }
 }
