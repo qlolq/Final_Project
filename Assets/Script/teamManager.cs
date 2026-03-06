@@ -24,6 +24,8 @@ public class teamManager : MonoBehaviour
     protected float timeDeliver;
     protected bool isAlive;
     internal int damage = 0;
+    internal int count = 0;
+    internal int[] AttackedType = new int[100];
 
     // Start is called before the first frame update
     protected void Start()
@@ -176,10 +178,13 @@ public class teamManager : MonoBehaviour
         action thisA = meThis.GetComponent<action>();
         action tarA = target.GetComponent<action>();
 
-        if (thisA.isAttacking) 
+
+        Debug.Log(thisA.IsAttacking());
+        if(thisA.IsAttacking())
         {
-            DamageCalculation(thisCharP, tarCharP, thisA, tarA);
-            thisA.isAttacking = false;
+            // count+=1;
+            // AttackedType[count-1] = thisA.animationState;
+            DamageCalculation(thisCharP, tarCharP, thisA, tarA); 
         }
     }
 

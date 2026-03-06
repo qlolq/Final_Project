@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1943148649748036330}
   bulletPrefab: {fileID: 8142288019137928932, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
-  thisA: {fileID: 8181709468950081099}
+  TheChar: {fileID: 3488411685498279745}
 --- !u!4 &8008778342178003922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994535994680476995, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}

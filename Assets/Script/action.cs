@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 //using static action;
 
@@ -27,11 +28,11 @@ public class action : MonoBehaviour
     //timer
     float DistTimer = 0f;
     float currentAniLength = 0f;
-    float IsFireTimer = -1.5f;
+    float IsFireTimer = -1.2f;
 
     //determine
     internal bool isAttacking;
-    
+        
     //FSM state
     public enum FSMState 
     {
@@ -263,7 +264,6 @@ public class action : MonoBehaviour
 
     IEnumerator AniLengthDetector(int animationState)
     {
-        yield return null;
         ReceiveAnimatorTime();
         
         if (animator.GetInteger("Action") == animationState)
@@ -369,34 +369,48 @@ public class action : MonoBehaviour
     //     }
     // }
 
-    public void IsAttacking()
+    public bool IsAttacking()
     {
-        if(DistTimer >= currentAniLength)
+        if(animationState >= 10 && animationState <= 14)
         {
-            if(animationState >= 10 && animationState <= 14)
+            DistTimer += Time.deltaTime;
+            if(DistTimer >= currentAniLength+0.15f)
             {
+                Debug.Log("Attacking");
+
                 if(attackRange <= 0.5f)
                 {
-                    isAttacking = true;
+                    return isAttacking = true;
                 }
 
                 else if(attackRange>0.5f)
                 {
                     IsFire();
+                    return isAttacking = true;
                 }
 
                 else
                 {
-                    isAttacking = false;
+                    return isAttacking = false;
                 }
             }
+            else 
+            {
+                return isAttacking = false;
+            }
         }
+        
+        else 
+        {
+            return isAttacking = false;
+        }
+
     }
 
     public bool IsFire() 
     {
         IsFireTimer += Time.deltaTime;
-        if(IsFireTimer >= currentAniLength + 0.3f)
+        if(IsFireTimer >= currentAniLength+0.3f)
         {
             IsFireTimer = 0f;
             return true;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5949000750135559086}
   - component: {fileID: 220033695148297856}
   - component: {fileID: 8118814516130387450}
+  - component: {fileID: -3703384371512568989}
   m_Layer: 0
   m_Name: magic ball_0
   m_TagString: Bullet
@@ -171,3 +172,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4978cab1575f52f4eb282d8124382e1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThisChar: {fileID: 3488411685498279745, guid: f3d8113e63a791842a0d8170a1111105, type: 3}
+--- !u!95 &-3703384371512568989
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8142288019137928932}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: afc57d36a5736e14180332d7db38d77e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -7,15 +7,23 @@ using UnityEngine;
 public class ThisBullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    internal String EnemyTag;
+    public GameObject ThisChar;
+    protected Animator animator;
+
+    private action charA;
+    internal string EnemyTag;
+    bool isAttacking = false;
     void Start()
     {
+        animator = GetComponent<Animator>();
+        charA = ThisChar.GetComponent<action>();
         EnemyTagDefined();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     void EnemyTagDefined()
@@ -34,20 +42,20 @@ public class ThisBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider) 
     {
-        if(collider.gameObject.tag == EnemyTag)
+        if(collider.CompareTag(EnemyTag))
         {
-            IsAttacking();
             BulletDestroy();
         }
     }
     public void BulletDestroy() 
     {
-        Debug.Log("Bullet Destroyed");
-        Destroy(this.gameObject,0.5f);
+        animator.SetBool("Destroy", true);
+        Destroy(this.gameObject,0.4f);
+        charA.isAttacking = false;
     }
 
-    public bool IsAttacking()
+    public bool BulletAttacking()
     {
-        return true;
+        return charA.isAttacking;
     }
 }
