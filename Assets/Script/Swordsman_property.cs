@@ -16,6 +16,7 @@ public class Swordsman_property : character_property
         //dex;  
         atkRange = 0.4f;
         //effectRange;
+        cooldown = 18;
         skillPower = new int[] { 15, 18, 22, 60, 125 };
         base.Awake();
     }

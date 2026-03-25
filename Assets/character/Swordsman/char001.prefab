@@ -198,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletRenderer: {fileID: 4844169757445259655, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
   bulletStartPos: {fileID: 6364603839043350918}
+  bullet: {fileID: 8142288019137928932, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
 --- !u!114 &1956887269062863319
 MonoBehaviour:
   m_ObjectHideFlags: 0

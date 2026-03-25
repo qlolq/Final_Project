@@ -179,7 +179,7 @@ public class teamManager : MonoBehaviour
         action tarA = target.GetComponent<action>();
 
 
-        Debug.Log(thisA.IsAttacking());
+        //Debug.Log(thisA.IsAttacking());
         if(thisA.IsAttacking())
         {
             // count+=1;
@@ -196,6 +196,8 @@ public class teamManager : MonoBehaviour
         target.Damageable(damage);
         meThis.IndicatorDamage(damage);
         target.IndicatorBurden(damage);
+
+        tarA.isAttacked = true;
     }
 
     /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

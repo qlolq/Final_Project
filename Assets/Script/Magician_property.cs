@@ -16,6 +16,7 @@ public class Magician_property : character_property
         //dex;  
         atkRange = 2.5f;
         //effectRange;
+        cooldown = 20;
         skillPower = new int[] { 12, 16, 18, 60, 125 };
         base.Awake();
     }

@@ -51,11 +51,12 @@ public class ThisBullet : MonoBehaviour
     {
         animator.SetBool("Destroy", true);
         Destroy(this.gameObject,0.4f);
-        charA.isAttacking = false;
+        isAttacking = true;
     }
 
-    public bool BulletAttacking()
+    public bool GetIsAttacking()
     {
-        return charA.isAttacking;
+        return isAttacking;
     }
+    
 }

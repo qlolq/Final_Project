@@ -16,6 +16,7 @@ public class Sniper_property : character_property
         //dex;  
         atkRange = 2.5f;
         //effectRange;
+        cooldown = 20;
         skillPower = new int[] { 16, 19, 24, 55, 125 };
         base.Awake();
     }
