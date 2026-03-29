@@ -8,7 +8,7 @@ public class Swordsman_property : character_property
     {
         name = "Swordsman";
         hp = 456;
-        atk = 55;
+        atk = 76;
         def = 20;
         satk = 0;
         sdef = 15;

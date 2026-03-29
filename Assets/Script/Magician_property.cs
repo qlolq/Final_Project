@@ -10,7 +10,7 @@ public class Magician_property : character_property
         hp = 422;
         atk = 45;
         def = 19;
-        satk = 25;
+        satk = 45;
         sdef = 20;
         speed = 3.0f;
         //dex;  

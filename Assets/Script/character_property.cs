@@ -125,5 +125,12 @@ public class character_property : MonoBehaviour
 
         hp_Effect.transform.localScale = targetScale;
     }
+
+    public void HPreset()
+    {
+        float fullHPRatio = (float)hp / hp;
+        hp_Full.transform.localScale = new Vector3(fullHPRatio, 1f, 1f);
+        hp_Effect.transform.localScale = new Vector3(fullHPRatio, 1f, 1f);
+    }
 }
 

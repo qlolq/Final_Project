@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.MPE;
 using UnityEngine;
 //using static action;
 
@@ -40,10 +41,14 @@ public class action : MonoBehaviour
     float skilltimer = 7.0f;
     float attackTimer = 0f;
 
+    float deadTimer = 0f;
+
     //determine
     internal bool isAttacking;
 
     internal bool isAttacked;
+
+    internal bool isDead = false;
         
     //FSM state
     public enum FSMState 
@@ -58,6 +63,7 @@ public class action : MonoBehaviour
         Attacked,  //5
         Skill,  //6
         ExtraSkill, //7
+        Reborn,  //8
 
     }
     protected FSMState curState;   //public because for looking the state
@@ -98,7 +104,25 @@ public class action : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {    
+        if(isDead)
+        {
+            isDead = false;
+            SpriteToFilp();
+            DistTimer += Time.deltaTime;
+
+            if (DistTimer >= currentAniLength)
+            {
+                animationState = 30;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.Dead;
+
+                DistTimer = 0f;
+
+                StartCoroutine(AniLengthDetector(animationState));            
+            } 
+        }
+
         if (target == null) 
         {
             if (curState != FSMState.Idle) 
@@ -108,11 +132,6 @@ public class action : MonoBehaviour
                 curState = FSMState.Idle;
             }
             return;
-        }
-
-        if (charP._hp <=0 && curState != FSMState.Dead) 
-        {
-            curState = FSMState.Dead;
         }
 
         switch (curState)
@@ -126,16 +145,37 @@ public class action : MonoBehaviour
             case FSMState.Attacked: UpdateAttackedState(); break;
             case FSMState.Skill:UpdateSkillState(); break;
             case FSMState.ExtraSkill: UpdateExtraSkillState();break;
+            case FSMState.Reborn: UpdateRebornState();break;
+        }
+        
+        if (charP._hp <=0 && curState != FSMState.Dead) 
+        {
+            isDead = true;
+            return;
         }
 
         if(isAttacked && charP._hp >0)
         {
-            animationState = 20;
-            animator.SetInteger("Action", animationState);
-            curState = FSMState.Attacked;
+            SpriteToFilp();
+
+            DistTimer += Time.deltaTime;
+
+            if (DistTimer >= currentAniLength+0.3f)
+            {
+
+                animationState = 20;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.Attacked;
+                
+                DistTimer = 0f;
+
+                StartCoroutine(AniLengthDetector(animationState));
+            }
+
+
         }
 
-        //Debug.Log(curState);
+        Debug.Log(curState);
         // Debug.Log(CalculateMagnitude());
         // Debug.Log(attackCount);
         // Debug.Log("isAttack " + attackCount);
@@ -314,21 +354,78 @@ public class action : MonoBehaviour
         }
 
     }
-
     protected void UpdateDeadState() 
     {
-        Vector3 deadPos = new Vector3 (0f, 0f, 0f);
-        if (this.CompareTag("BlueTeam"))
+        deadTimer+= Time.deltaTime;
+        
+        if(deadTimer >= 10.0f)
         {
-            deadPos = new Vector3(300, 0, 0f);
+            deadTimer = 0f;
+            
+            animationState = 32;
+            animator.SetInteger("Action", animationState);
+            curState = FSMState.Reborn;
         }
 
-        else 
+        else if(deadTimer >= 3.0f)
         {
-            deadPos = new Vector3(-300.0f, 0, 0f);
+            Vector3 deadPos = new Vector3 (0f, 0f, 0f);
+            if (this.CompareTag("BlueTeam"))
+            {
+                deadPos = new Vector3(300, 0, 0f);
+            }
+
+            else 
+            {
+                deadPos = new Vector3(-300.0f, 0, 0f);
+            }
+            this.transform.position = deadPos;
+
+            animationState = 31;
+            animator.SetInteger("Action", animationState);
+            curState = FSMState.Dead;
         }
-        this.transform.position = deadPos;
-        curState = FSMState.Idle;
+    }
+    protected void UpdateRebornState()
+    {
+        SpriteToFilp();
+
+        DistTimer += Time.deltaTime;
+        charP._hp = charP.hp;
+        charP.HPreset();
+        
+        if (DistTimer >= currentAniLength + 0.3f)
+        {
+            if(this.tag=="BlueTeam")
+            {
+                float BlueminX = -5.3f;
+                float BluemaxX = -1.0f;
+                float BlueminY = -2.5f;
+                float BluemaxY = 3.0f;
+
+                float x = UnityEngine.Random.Range(BlueminX, BluemaxX);
+                float y = UnityEngine.Random.Range(BlueminY, BluemaxY);
+                this.transform.position = new Vector3(x, y, 0);
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.Idle;
+            }
+
+            else
+            {
+                float RedminX = 1.0f;
+                float RedmaxX = 5.3f;
+                float RedminY = -2.5f;
+                float RedmaxY = 3.0f;
+
+                float x = UnityEngine.Random.Range(RedminX, RedmaxX);
+                float y = UnityEngine.Random.Range(RedminY, RedmaxY);
+                this.transform.position = new Vector3(x, y, 0);
+                animationState = 0;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.Idle;
+            }
+        }
     }
 
     protected void UpdateAttackedState()

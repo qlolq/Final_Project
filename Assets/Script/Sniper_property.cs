@@ -8,7 +8,7 @@ public class Sniper_property : character_property
     {
         name = "Sniper";
         hp = 402;
-        atk = 56;
+        atk = 66;
         def = 15;
         satk = 0;
         sdef = 12;
