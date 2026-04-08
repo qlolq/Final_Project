@@ -143,12 +143,14 @@ public class teamManager : MonoBehaviour
         }
     }
 
-    void EnemyList(int count)
+    public GameObject[] EnemyList(int count)
     {
         for (int i = 0; i < count; i++)
         {
             targets[i] = Enemy.Team[i];
         }
+
+        return targets;
     }
 
     void TimerOperate()

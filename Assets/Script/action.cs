@@ -26,7 +26,7 @@ public class action : MonoBehaviour
     protected float speed;
     protected float attackRange;
 
-    protected int cooldown;
+    protected float cooldown;
 
     protected string name;
 
@@ -49,6 +49,10 @@ public class action : MonoBehaviour
     internal bool isAttacked;
 
     internal bool isDead = false;
+    internal Rigidbody2D rb;
+    internal Collider2D hitCollider;
+
+    internal bool isDash = false; //swordman skill
         
     //FSM state
     public enum FSMState 
@@ -88,8 +92,6 @@ public class action : MonoBehaviour
         isAttacking = false;
         isAttacked = false;
 
-        Collider2D collider = GetComponent<Collider2D>();
-
         teamManager[] allManagers = FindObjectsOfType<teamManager>();
 
         foreach(var manager in allManagers)
@@ -100,11 +102,44 @@ public class action : MonoBehaviour
                 break;
             }
         }
+        
+        rb = GetComponent<Rigidbody2D>();
+        hitCollider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {    
+        if(animationState<30)
+        {
+            if(this.transform.position.x>5.8 && isDead == false)
+            {
+                this.transform.position = new Vector3(5.7f, this.transform.position.y, this.transform.position.z);
+            }
+
+            if(this.transform.position.x<-5.8 && isDead == false)
+            {
+                this.transform.position = new Vector3(-5.7f, this.transform.position.y, this.transform.position.z);
+            }
+            
+            if(this.transform.position.y>2.85 && isDead == false)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, 2.75f, this.transform.position.z);
+            }
+
+            if(this.transform.position.y<-2.85 && isDead == false)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, -2.75f, this.transform.position.z);
+            }
+        }
+
+        if(animationState<30 && CalculateMagnitude() > 100.0f)
+        {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+            curState = FSMState.Idle;        
+        }
+
         if(isDead)
         {
             isDead = false;
@@ -175,7 +210,7 @@ public class action : MonoBehaviour
 
         }
 
-        Debug.Log(curState);
+        //Debug.Log(curState);
         // Debug.Log(CalculateMagnitude());
         // Debug.Log(attackCount);
         // Debug.Log("isAttack " + attackCount);
@@ -183,6 +218,7 @@ public class action : MonoBehaviour
         // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
         // Debug.Log(this.attackRange);
         //Debug.Log(name);
+        Debug.Log(animationState);
 
         if(skilltimer < cooldown)
         {
@@ -229,6 +265,7 @@ public class action : MonoBehaviour
             {
                 if(name.Equals("Swordsman"))
                 {
+                    isDash = true;
                     StartCoroutine(DashToTarget());
                 }
 
@@ -365,6 +402,8 @@ public class action : MonoBehaviour
             animationState = 32;
             animator.SetInteger("Action", animationState);
             curState = FSMState.Reborn;
+            StartCoroutine(AniLengthDetector(animationState));
+
         }
 
         else if(deadTimer >= 3.0f)
@@ -384,6 +423,7 @@ public class action : MonoBehaviour
             animationState = 31;
             animator.SetInteger("Action", animationState);
             curState = FSMState.Dead;
+            StartCoroutine(AniLengthDetector(animationState));
         }
     }
     protected void UpdateRebornState()
@@ -393,6 +433,9 @@ public class action : MonoBehaviour
         DistTimer += Time.deltaTime;
         charP._hp = charP.hp;
         charP.HPreset();
+        isAttacked = false;
+        isAttacking = false;
+        charP.cooldown = 0.0f;
         
         if (DistTimer >= currentAniLength + 0.3f)
         {
@@ -409,6 +452,8 @@ public class action : MonoBehaviour
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
                 curState = FSMState.Idle;
+                StartCoroutine(AniLengthDetector(animationState));
+
             }
 
             else
@@ -424,7 +469,10 @@ public class action : MonoBehaviour
                 animationState = 0;
                 animator.SetInteger("Action", animationState);
                 curState = FSMState.Idle;
+                StartCoroutine(AniLengthDetector(animationState));
             }
+
+            DistTimer = 0f;
         }
     }
 
@@ -514,50 +562,40 @@ public class action : MonoBehaviour
 
     IEnumerator DashToTarget()
     {
-        float dashtime = 1.2f;
+        float dashtime = 1.0f;
         float elapsedTime = 0f;
 
         Vector3 startPos = this.transform.position;
-        Vector3 endPos = new Vector3(this.transform.position.x,this.transform.position.y,this.transform.position.z);
-
-        if (this.transform.position.x <= target.transform.position.x)
-        {
-            endPos = new Vector3(this.transform.position.x + 3.0f,this.transform.position.y,this.transform.position.z);
-        }
-
-        else
-        {
-            endPos = new Vector3(this.transform.position.x - 3.0f,this.transform.position.y,this.transform.position.z);
-        }
-
-        PathDamage(startPos, endPos);
+        Vector3 dir = (target.transform.position - transform.position).normalized;
+        Vector3 endPos = startPos + dir * 3.0f;
 
         while (elapsedTime < dashtime)
         {
-            transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / dashtime);
+            rb.MovePosition(Vector3.Lerp(startPos, endPos, elapsedTime / dashtime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        this.transform.position = endPos;
+        rb.MovePosition(endPos);
+        isDash = false;
     }
 
-    void PathDamage(Vector3 startPos, Vector3 endPos)
+    void OnTriggerEnter2D(Collider2D hitCollider)
     {
-        RaycastHit2D[] hitObjects = Physics2D.LinecastAll(startPos, endPos);
-        foreach (RaycastHit2D hit in hitObjects)
-        {
-            GameObject hitEnemy = hit.collider.gameObject;
+        GameObject hitTarget = hitCollider.gameObject;
 
-            if (hitEnemy == gameObject||hitEnemy.CompareTag(tag))
+        if(isDash)
+        {
+            if(hitTarget.CompareTag(target.tag))
             {
-                isAttacking = true;
-                myTM.HealthInitial(0,this.gameObject, target);
+                isAttacking=true;
+                target = hitTarget;
+                // myTM.HealthInitial(13, this.gameObject, hitTarget); 
+                Debug.LogError("Dash Attack!");
             }
         }
-
-        isAttacking = false;
     }
+
 
     void ReceiveAnimatorTime() 
     {
@@ -648,7 +686,7 @@ public class action : MonoBehaviour
 
     public bool IsAttacking()
     {
-        if(animationState >= 10 && animationState <= 12)
+        if(animationState >= 10 && animationState <= 14)
         {
             DistTimer += Time.deltaTime;
             if(DistTimer >= currentAniLength+0.15f)
@@ -686,7 +724,7 @@ public class action : MonoBehaviour
     public bool IsFire() 
     {
         IsFireTimer += Time.deltaTime;
-        if(IsFireTimer >= currentAniLength+0.3f)
+        if(IsFireTimer >= currentAniLength+0.1f && animationState != 0)
         {
             IsFireTimer = 0f;
             return true;

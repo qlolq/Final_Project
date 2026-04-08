@@ -18,7 +18,7 @@ public class character_property : MonoBehaviour
     internal float effectRange; //傷害判定範圍（AOE？單體攻擊？）只for普通攻擊
                                 //skilltime
     
-    internal int cooldown;
+    internal float cooldown;
 
     internal int []skillPower;
 
