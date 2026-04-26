@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ThisBullet : MonoBehaviour
+public class ThisBall : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject ThisChar;
+    public GameObject ThisChar; 
     protected Animator animator;
 
     internal action charA;
     internal string EnemyTag;
     internal bool isRangeAttacking = false;
 
-    internal bool hasCollider = false;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -31,37 +30,49 @@ public class ThisBullet : MonoBehaviour
 
     void EnemyTagDefined()
     {
-        if(this.tag=="RedTeamBullet")
+        if(this.tag=="RedTeamBall")
         {
             EnemyTag = "BlueTeam";
         }
 
-        else
+        else if(this.tag=="BlueTeamBall")
         {
             EnemyTag = "RedTeam";
+        }
+
+        else
+        {
+            EnemyTag = "";
         }
 
     }
 
     void OnTriggerEnter2D(Collider2D collider) 
     {
-        if(hasCollider) 
-        {
-            return;
-        }
 
         if(collider.CompareTag(EnemyTag))
         {
-            hasCollider = true;
             GameObject hitTarget = collider.gameObject;
-            charA.isAttacking = true;
+
+            // Debug.Log("Hit");
+            charA.isSkillAttacking = true;
             charA.target = hitTarget;
-            BulletDestroy();
+            //Debug.Log(hitTarget.name);
+
+            charA.IsSkillAttacking(charA.target);
         }
+
+        if(collider.tag==null)
+        {
+            Debug.Log("no target");
+        }
+        BulletDestroy();
+
     }
     public void BulletDestroy() 
     {
         animator.SetBool("Destroy", true);
-        Destroy(this.gameObject,0.4f);
+        Destroy(this.gameObject,1.0f);
     }
+    
 }

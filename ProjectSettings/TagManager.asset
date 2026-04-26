@@ -8,6 +8,10 @@ TagManager:
   - RedTeam
   - BlueTeam
   - Bullet
+  - BlueTeamBall
+  - RedTeamBall
+  - BlueTeamBullet
+  - RedTeamBullet
   layers:
   - Default
   - TransparentFX

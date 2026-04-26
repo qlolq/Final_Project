@@ -173,28 +173,46 @@ public class teamManager : MonoBehaviour
     /// <param name="Damage"></param>
     /// 
 
-    public void HealthInitial(int count,GameObject meThis, GameObject target) 
+    public void HealthInitial(GameObject meThis, GameObject target) 
     {
         character_property thisCharP = meThis.GetComponent<character_property>();
         character_property tarCharP = target.GetComponent<character_property>();
         action thisA = meThis.GetComponent<action>();
         action tarA = target.GetComponent<action>();
 
-
+        //Debug.Log("Attacking");
+        //Debug.Log(thisA.isRangeAttacking);
         //Debug.Log(thisA.IsAttacking());
-        if(thisA.IsAttacking())
-        {
-            // count+=1;
-            // AttackedType[count-1] = thisA.animationState;
-            DamageCalculation(thisCharP, tarCharP, thisA, tarA); 
-        }
+
+        DamageCalculation(thisCharP, tarCharP, thisA, tarA); 
     }
 
     public void DamageCalculation(character_property meThis, character_property target, action thisA, action tarA) 
     {
-        int i = thisA.animationState - 10;
+        int i = 0;
 
-        damage = Mathf.Max(meThis.skillPower[i] * meThis.atk / (target.def + 10), 0);
+        if (meThis.skillPower.Length<0)
+        {
+            i = thisA.currentSkillIndex;
+        }
+        else
+        {
+            i = thisA.animationState - 10;
+        }    
+
+        // Debug.Log(meThis.skillPower[i]);
+        if(i>0 && i < meThis.skillPower.Length)
+        {
+            damage = Mathf.Max(meThis.skillPower[i] * meThis.atk / (target.def + 10), 0);            
+        }
+
+        else
+        {
+            damage =  Mathf.Max(60 * meThis.atk / (target.def + 10), 0);            
+        }
+
+        Debug.Log(damage);
+
         target.Damageable(damage);
         meThis.IndicatorDamage(damage);
         target.IndicatorBurden(damage);
@@ -237,8 +255,6 @@ public class teamManager : MonoBehaviour
 
             action Action = meThis.GetComponent<action>();
             Action.ReceiveNearestTarget(nearestTarget);
-
-            HealthInitial(count, meThis, nearestTarget);
         }
     }
 }

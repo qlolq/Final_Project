@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 //using System.Numerics;
 using NUnit.Framework;
 using Unity.VisualScripting;
@@ -15,8 +17,8 @@ public class action : MonoBehaviour
     protected AnimatorStateInfo currentAniState;
     protected SpriteRenderer spriteRenderer;
     public SpriteRenderer bulletRenderer;
-    protected GameObject target;
-    protected character_property charP;
+    internal GameObject target;
+    internal character_property charP;
     private teamManager myTM;
 
     public GameObject bulletStartPos;
@@ -45,15 +47,24 @@ public class action : MonoBehaviour
 
     //determine
     internal bool isAttacking;
-
     internal bool isAttacked;
+    internal bool hasDealDamage = false;
+    
+    internal bool hasSkillDamage = false;
+
+    internal bool isRangeAttacking = false;
+    internal bool isSkillAttacking = false;
 
     internal bool isDead = false;
     internal Rigidbody2D rb;
     internal Collider2D hitCollider;
 
     internal bool isDash = false; //swordman skill
-        
+
+    internal static string teamTag;
+
+    internal int currentSkillIndex = -1;
+
     //FSM state
     public enum FSMState 
     {
@@ -98,11 +109,14 @@ public class action : MonoBehaviour
         {
             if(manager.gameObject.CompareTag(this.tag))
             {
+                // Debug.Log(this.gameObject.tag);
                 myTM = manager;
                 break;
             }
         }
-        
+
+        teamTag= this.tag;
+
         rb = GetComponent<Rigidbody2D>();
         hitCollider = GetComponent<Collider2D>();
     }
@@ -206,8 +220,6 @@ public class action : MonoBehaviour
 
                 StartCoroutine(AniLengthDetector(animationState));
             }
-
-
         }
 
         //Debug.Log(curState);
@@ -218,7 +230,8 @@ public class action : MonoBehaviour
         // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
         // Debug.Log(this.attackRange);
         //Debug.Log(name);
-        Debug.Log(animationState);
+        //Debug.Log(animationState);
+        //Debug.Log(this.gameObject);
 
         if(skilltimer < cooldown)
         {
@@ -261,7 +274,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector(animationState));
             }
 
-            if(skilltimer >= cooldown)
+            else if(CalculateMagnitude() <= attackRange && skilltimer >= cooldown)
             {
                 if(name.Equals("Swordsman"))
                 {
@@ -269,10 +282,15 @@ public class action : MonoBehaviour
                     StartCoroutine(DashToTarget());
                 }
 
+                else if(name.Equals("Magician"))
+                {
+                    IsSkillFire();
+                }
+
                 animationState = 13;
                 animator.SetInteger("Action", animationState);
                 curState = FSMState.Skill;
-
+                hasSkillDamage = false;
                 DistTimer = 0f;
                 StartCoroutine(AniLengthDetector(animationState));
 
@@ -301,6 +319,7 @@ public class action : MonoBehaviour
 
     protected void UpdateStAttackState(GameObject target) 
     {
+        IsAttacking();
         SpriteToFilp();
 
         DistTimer += Time.deltaTime;
@@ -324,7 +343,7 @@ public class action : MonoBehaviour
                 animator.SetInteger("Action", animationState);
 
                 curState = FSMState.ndAttack;
-
+                hasDealDamage = false;
                 //triggerAttackOn = false;
                 DistTimer =0f;
                 attackCount = 0;
@@ -335,6 +354,7 @@ public class action : MonoBehaviour
 
     protected void UpdateNdAttackState(GameObject target)
     {
+        IsAttacking();
         SpriteToFilp();
 
         DistTimer +=Time.deltaTime;
@@ -359,6 +379,7 @@ public class action : MonoBehaviour
                 animator.SetInteger("Action", animationState);
 
                 curState = FSMState.rdAttack;
+                hasDealDamage = false;  
 
                 //triggerAttackOn = false;
                 DistTimer = 0f;
@@ -369,6 +390,7 @@ public class action : MonoBehaviour
 
     protected void UpdateRdAttackState(GameObject target)
     {
+        IsAttacking();
         SpriteToFilp();
 
         DistTimer += Time.deltaTime;
@@ -381,7 +403,7 @@ public class action : MonoBehaviour
                 animator.SetInteger("Action", animationState);
 
                 curState = FSMState.Idle;
-
+                hasDealDamage = false;
                //triggerAttackOn = false;
                 DistTimer = 0f;
                 //attackCount = 0;
@@ -389,7 +411,6 @@ public class action : MonoBehaviour
             }
 
         }
-
     }
     protected void UpdateDeadState() 
     {
@@ -539,7 +560,11 @@ public class action : MonoBehaviour
     protected void UpdateExtraSkillState()
     {
     }
-
+/// <summary>
+/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// </summary>
+/// <param name="animationState"></param>
+/// <returns></returns>
     IEnumerator AniLengthDetector(int animationState)
     {
         ReceiveAnimatorTime();
@@ -583,17 +608,17 @@ public class action : MonoBehaviour
     void OnTriggerEnter2D(Collider2D hitCollider)
     {
         GameObject hitTarget = hitCollider.gameObject;
-
         if(isDash)
         {
             if(hitTarget.CompareTag(target.tag))
             {
-                isAttacking=true;
                 target = hitTarget;
-                // myTM.HealthInitial(13, this.gameObject, hitTarget); 
+                myTM.HealthInitial(this.gameObject, target); 
                 Debug.LogError("Dash Attack!");
             }
+            isSkillAttacking=false;
         }
+        hitTarget=null;
     }
 
 
@@ -633,7 +658,6 @@ public class action : MonoBehaviour
             spriteRenderer.flipX = false;
             bulletRenderer.flipX = true;
             bulletStartPos.transform.position = new Vector3(this.transform.position.x-0.5f,this.transform.position.y+0.2f, this.transform.position.z);
-
         }
     }
 
@@ -684,47 +708,80 @@ public class action : MonoBehaviour
     //     }
     // }
 
-    public bool IsAttacking()
+    public void IsAttacking()
     {
-        if(animationState >= 10 && animationState <= 14)
+        if(animationState >= 10 && animationState <= 12)
         {
-            DistTimer += Time.deltaTime;
-            if(DistTimer >= currentAniLength+0.15f)
+            if(!hasDealDamage)
             {
                 if(attackRange <= 0.5f)
                 {
-                    return isAttacking = true;
+                    isAttacking = true;
+                    if(isAttacking)
+                    {
+                        myTM.HealthInitial(this.gameObject, target);
+                        isAttacking = false;
+                    }
                 }
 
                 else if(attackRange>0.5f)
                 {
-                    IsFire();
-                    attackTimer += Time.deltaTime;
-                    return isAttacking = true;
+                    isAttacking = true;
+                    if(isAttacking)
+                    {
+                        IsFire();
+                        myTM.HealthInitial(this.gameObject, target);
+                        isAttacking = false;
+                    }
                 }
+                
+                hasDealDamage = true;
 
-                else
-                {
-                    return isAttacking = false;
-                }
-            }
-            else 
-            {
-                return isAttacking = false;
             }
         }
-        
-        else 
-        {
-            return isAttacking = false;
-        }
-
     }
 
+    public void IsSkillAttacking(GameObject hitTarget)
+    {
+        GameObject target = hitTarget;
+
+        if(isSkillAttacking)
+        {
+            //Debug.Log(isSkillAttacking);
+            if (hitTarget != null)
+            {
+                teamManager[] allManagers = FindObjectsOfType<teamManager>();
+
+                foreach(var manager in allManagers)
+                {
+                    if(manager.gameObject.CompareTag(teamTag))
+                    {
+                        // Debug.Log(this.gameObject.tag);
+                        myTM = manager;
+                        break;
+                    }
+                }
+                // Debug.Log(myTM);
+
+                if(myTM!=null)
+                {
+                    //Debug.Log(animationState);
+                    myTM.HealthInitial(this.gameObject, hitTarget);
+                }
+            }
+        }
+        //isSkillAttacking = false;
+    }
+
+    /// <summary>
+    /// ////////////////////////bullet and ball/////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    /// <returns></returns>
     public bool IsFire() 
     {
+        // Debug.Log("IsFire");
         IsFireTimer += Time.deltaTime;
-        if(IsFireTimer >= currentAniLength+0.1f && animationState != 0)
+        if(IsFireTimer >= currentAniLength+0.1f && CalculateMagnitude() < 50.0f && !hasDealDamage)
         {
             IsFireTimer = 0f;
             return true;
@@ -732,6 +789,18 @@ public class action : MonoBehaviour
         return false;
     }
 
+    public bool IsSkillFire() 
+    {   
+        //Debug.Log("IsSkillFire");     
+        IsFireTimer += Time.deltaTime;
+        if(IsFireTimer >= currentAniLength+0.1f && CalculateMagnitude() < 50.0f && !hasSkillDamage)
+        {
+            hasSkillDamage = true;
+            IsFireTimer = 0f;
+            return true;
+        }
+        return false;
+    }
     public GameObject returnTarget()
     {
         return target;

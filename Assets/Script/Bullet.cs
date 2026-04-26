@@ -46,12 +46,16 @@ public class Bullet : MonoBehaviour
 
         if(target.tag=="RedTeam")
         {
-            bullet.tag = "BlueTeam";
+            bullet.tag = "BlueTeamBullet";
         }
 
+        else if(target.tag=="BlueTeam")
+        {
+            bullet.tag = "RedTeamBullet";
+        }
         else
         {
-            bullet.tag = "RedTeam";
+            bullet.tag = "";
         }
     }
 
