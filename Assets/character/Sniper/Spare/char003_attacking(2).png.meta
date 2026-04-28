@@ -1,0 +1,1214 @@
+fileFormatVersion: 2
+guid: fc2f66f5911fcfc47ae679979b872753
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 639
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: char003_attacking(2)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5761
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe5707b394c1ebc4baef3f99c4538830
+      internalID: -1891005063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_1
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 5761
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f052e3102bcef8546a6027dd63eaf25b
+      internalID: -1869597975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_2
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 5761
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b99a00049c12ecd47abc405e72275ec7
+      internalID: 1424527682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_3
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 5761
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69210a7095033744d92d2d2f15a052f3
+      internalID: -1340776673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_4
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 5761
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46a9a9845e2579245a14bd26b6c9e699
+      internalID: -711301549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5122
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11b3a0e6869025c4eb4f856dd3180dd8
+      internalID: 686340862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_6
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 5122
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 467369987e42bee4a9514cf91b668f0d
+      internalID: -984550184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_7
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 5122
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d61acf63c00034db5d001c4e9c45fc
+      internalID: -1878070035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_8
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 5122
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 153cc1d6816cd5649bd781be030a0d1c
+      internalID: -696921688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_9
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 5122
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10698db610b06546a68c0d090b8700f
+      internalID: -1556041865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4483
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf3dbacac52cf4a4f90d421212b9247f
+      internalID: -1079263198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_11
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 4483
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd2f2c3b77cc3c541abc7346b30d1f57
+      internalID: -1605817008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_12
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 4483
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22d34982d7b095a4c983a8f4b2d5ca11
+      internalID: -1391566352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_13
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 4483
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a84da355d079f124495673c5c935be93
+      internalID: 250019319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_14
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 4483
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7451f057851e1340ac7e49e6717ae06
+      internalID: 95520770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3844
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d7a5128e128c74aa94737bd8d00747
+      internalID: 921767051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_16
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 3844
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 885c22e2780f03d4889360e9926ea4a9
+      internalID: 1629236486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_17
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 3844
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c654276fd420bda499683db7ab119655
+      internalID: -579494994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_18
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 3844
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a120aed08662ca4459bd2db7bddf25fd
+      internalID: 543563872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_19
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 3844
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6e0b91950de3784db3295de4327fe44
+      internalID: -110670726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3205
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f51e53d50580f474f8650195f3978250
+      internalID: 1464584503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_21
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 3205
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 192520462c7e2b34aa1b4db79e7b5507
+      internalID: -461295348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_22
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 3205
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e22f8d68959cf5f4a8421d688b5e8b31
+      internalID: -1104706803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_23
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 3205
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbb6138c0ebe45b4681d4a04060447ca
+      internalID: -806302351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_24
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 3205
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b53d3b65fe18c429e7d2297f29a584
+      internalID: -145128334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2566
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79966649c990b4242bace588148b33fa
+      internalID: -1639445788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_26
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 2566
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a752a26065d9ce47aaeedb730af7689
+      internalID: -783167688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_27
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 2566
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de321d10228a2914da2527f58bd1c20f
+      internalID: 1475780386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_28
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 2566
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 125e6cac3c1bf504385fa01c2d70a1a7
+      internalID: -695556669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_29
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 2566
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9063d1b720eba841879b21dbe3d425a
+      internalID: -497948581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1927
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b890e890816b301469bae1c7f89a752f
+      internalID: -35628650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_31
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 1927
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf2852a8a3ad314a9de8a71f0c2367e
+      internalID: 1267533618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_32
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 1927
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afb61fa78d496d349b074af99673a6c6
+      internalID: 1987001078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_33
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 1927
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c579c8db6b45fa42bb203ffbe31d82b
+      internalID: -1209084089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_34
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 1927
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa87deb48bdef734a85fb8b71c47ba30
+      internalID: 112489552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1288
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da9d081416576be45a8395c61ccc1d53
+      internalID: 180167304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_36
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 1288
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dccdab6c69d81d24aabf545bf4577fa4
+      internalID: 100672586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_37
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 1288
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04625236bcec64e4a8f15ffe6707c35c
+      internalID: 1891436727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_38
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 1288
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 401d8c4ca576d854880e00d981e9d5f5
+      internalID: 1093175966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_39
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 1288
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 436af670290b4fb4386a0a9e2f0307e5
+      internalID: 338555243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 649
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56c0996e176c33f4fac2e49dcfac5fec
+      internalID: -1805689009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_41
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 649
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98ab71ef19f8e8442815d0a7b7a03c24
+      internalID: 850868069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_42
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 649
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c83e079bd0a9f68429ccc6fc099704af
+      internalID: -2118928237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_43
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 649
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b1cea1fffa1d514d9e07f658a633a66
+      internalID: 761197112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_44
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 649
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b8d5bccd6b3e94ab66ad97852fa16d
+      internalID: -1635694829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0cc68b90ba89df4fa5057b06235dbb6
+      internalID: -1013934389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_46
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 10
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b20c127b77e247c4f9d43ceec8d77ad5
+      internalID: -1625340105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_47
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 10
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b05ba4f0394c5479fe11ccead354d9
+      internalID: 876797664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_48
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 10
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7386555a1d85986499fac25b5fead4fc
+      internalID: 1714330298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char003_attacking(2)_49
+      rect:
+        serializedVersion: 2
+        x: 2556
+        y: 10
+        width: 639
+        height: 639
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88d325bab4da02a489b06b3c14a867b0
+      internalID: 134457874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      char003_attacking(2)_0: -1891005063
+      char003_attacking(2)_1: -1869597975
+      char003_attacking(2)_10: -1079263198
+      char003_attacking(2)_11: -1605817008
+      char003_attacking(2)_12: -1391566352
+      char003_attacking(2)_13: 250019319
+      char003_attacking(2)_14: 95520770
+      char003_attacking(2)_15: 921767051
+      char003_attacking(2)_16: 1629236486
+      char003_attacking(2)_17: -579494994
+      char003_attacking(2)_18: 543563872
+      char003_attacking(2)_19: -110670726
+      char003_attacking(2)_2: 1424527682
+      char003_attacking(2)_20: 1464584503
+      char003_attacking(2)_21: -461295348
+      char003_attacking(2)_22: -1104706803
+      char003_attacking(2)_23: -806302351
+      char003_attacking(2)_24: -145128334
+      char003_attacking(2)_25: -1639445788
+      char003_attacking(2)_26: -783167688
+      char003_attacking(2)_27: 1475780386
+      char003_attacking(2)_28: -695556669
+      char003_attacking(2)_29: -497948581
+      char003_attacking(2)_3: -1340776673
+      char003_attacking(2)_30: -35628650
+      char003_attacking(2)_31: 1267533618
+      char003_attacking(2)_32: 1987001078
+      char003_attacking(2)_33: -1209084089
+      char003_attacking(2)_34: 112489552
+      char003_attacking(2)_35: 180167304
+      char003_attacking(2)_36: 100672586
+      char003_attacking(2)_37: 1891436727
+      char003_attacking(2)_38: 1093175966
+      char003_attacking(2)_39: 338555243
+      char003_attacking(2)_4: -711301549
+      char003_attacking(2)_40: -1805689009
+      char003_attacking(2)_41: 850868069
+      char003_attacking(2)_42: -2118928237
+      char003_attacking(2)_43: 761197112
+      char003_attacking(2)_44: -1635694829
+      char003_attacking(2)_45: -1013934389
+      char003_attacking(2)_46: -1625340105
+      char003_attacking(2)_47: 876797664
+      char003_attacking(2)_48: 1714330298
+      char003_attacking(2)_49: 134457874
+      char003_attacking(2)_5: 686340862
+      char003_attacking(2)_6: -984550184
+      char003_attacking(2)_7: -1878070035
+      char003_attacking(2)_8: -696921688
+      char003_attacking(2)_9: -1556041865
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

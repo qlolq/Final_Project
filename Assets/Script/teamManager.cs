@@ -6,14 +6,14 @@ public class teamManager : MonoBehaviour
 
 {
     public teamManager Enemy;
-    public int teamNum = 1;
+    public int teamNum = 3;
     internal GameObject[] Team;
     private Vector3 [] RandPos;
     private string teamTag;
 
     [SerializeField] private GameObject character_1;
     [SerializeField] private GameObject character_2;
-
+    [SerializeField] private GameObject character_3;
 
     protected float[] targetDist;
     protected GameObject[] targets;
@@ -117,6 +117,11 @@ public class teamManager : MonoBehaviour
             {
                 Team[i] = Instantiate(character_2, teamPos, Quaternion.identity);
             }
+
+            else if (i == 2)
+            {
+                Team[i] = Instantiate(character_3, teamPos, Quaternion.identity);
+            }
         }
     }
 
@@ -211,7 +216,7 @@ public class teamManager : MonoBehaviour
             damage =  Mathf.Max(60 * meThis.atk / (target.def + 10), 0);            
         }
 
-        Debug.Log(damage);
+        //Debug.Log(damage);
 
         target.Damageable(damage);
         meThis.IndicatorDamage(damage);

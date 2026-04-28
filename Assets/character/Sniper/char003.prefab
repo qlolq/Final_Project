@@ -196,10 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0181739e971caa4c94fb0c79e2f60e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletRenderer: {fileID: 4844169757445259655, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
+  bulletRenderer: {fileID: 2730023225851813939, guid: 29d270140e103654fb92a26075e27336, type: 3}
   bulletStartPos: {fileID: 7726218949876545984}
-  bullet: {fileID: 8142288019137928932, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
-  hitCollider: {fileID: 8535904833306980616}
+  bullet: {fileID: 7024830959518524690, guid: 29d270140e103654fb92a26075e27336, type: 3}
 --- !u!114 &164090814294229960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4994535994680476995, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4994535994680476995, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -329,7 +328,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4315871621550239745}
   m_SourcePrefab: {fileID: 100100000, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
 --- !u!4 &2227765784436152568 stripped
 Transform:
@@ -341,3 +343,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
   m_PrefabInstance: {fileID: 6609794603245837755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4315871621550239745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726218949876545984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eeb39784b85e8f4ab1ec7ae8f349c75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {fileID: 7726218949876545984}
+  bulletPrefab: {fileID: 7024830959518524690, guid: 29d270140e103654fb92a26075e27336, type: 3}
+  TheChar: {fileID: 2036005981543792989}

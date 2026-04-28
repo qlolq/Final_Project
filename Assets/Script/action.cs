@@ -61,6 +61,8 @@ public class action : MonoBehaviour
 
     internal bool isDash = false; //swordman skill
 
+    internal bool isBackWard = false;
+
     internal static string teamTag;
 
     internal int currentSkillIndex = -1;
@@ -230,7 +232,7 @@ public class action : MonoBehaviour
         // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
         // Debug.Log(this.attackRange);
         //Debug.Log(name);
-        //Debug.Log(animationState);
+        Debug.Log(animationState);
         //Debug.Log(this.gameObject);
 
         if(skilltimer < cooldown)
@@ -285,6 +287,12 @@ public class action : MonoBehaviour
                 else if(name.Equals("Magician"))
                 {
                     IsSkillFire();
+                }
+
+                else if(name.Equals("Sniper"))
+                {
+                    isBackWard = true;
+                    StartCoroutine(BackWardToTarget());                
                 }
 
                 animationState = 13;
@@ -457,6 +465,12 @@ public class action : MonoBehaviour
         isAttacked = false;
         isAttacking = false;
         charP.cooldown = 0.0f;
+        hasDealDamage = false;
+        hasSkillDamage = false;
+        IsFireTimer = -1.2f;      
+        isSkillAttacking = false;
+        isDash = false;
+        
         
         if (DistTimer >= currentAniLength + 0.3f)
         {
@@ -605,6 +619,26 @@ public class action : MonoBehaviour
         isDash = false;
     }
 
+        IEnumerator BackWardToTarget()
+    {
+        float dashtime = 1.0f;
+        float elapsedTime = 0f;
+
+        Vector3 startPos = this.transform.position;
+        Vector3 dir = (target.transform.position - transform.position).normalized;
+        Vector3 endPos = startPos + dir * -2.0f;
+
+        while (elapsedTime < dashtime)
+        {
+            rb.MovePosition(Vector3.Lerp(startPos, endPos, elapsedTime / dashtime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.MovePosition(endPos);
+        isBackWard = false;
+    }
+
     void OnTriggerEnter2D(Collider2D hitCollider)
     {
         GameObject hitTarget = hitCollider.gameObject;
@@ -714,7 +748,7 @@ public class action : MonoBehaviour
         {
             if(!hasDealDamage)
             {
-                if(attackRange <= 0.5f)
+                if(name.Equals("Swordsman"))
                 {
                     isAttacking = true;
                     if(isAttacking)
@@ -724,7 +758,18 @@ public class action : MonoBehaviour
                     }
                 }
 
-                else if(attackRange>0.5f)
+                else if(name.Equals("Magician"))
+                {
+                    isAttacking = true;
+                    if(isAttacking)
+                    {
+                        IsFire();
+                        myTM.HealthInitial(this.gameObject, target);
+                        isAttacking = false;
+                    }
+                }
+
+                else if(name.Equals("Sniper"))
                 {
                     isAttacking = true;
                     if(isAttacking)
@@ -788,7 +833,6 @@ public class action : MonoBehaviour
         }
         return false;
     }
-
     public bool IsSkillFire() 
     {   
         //Debug.Log("IsSkillFire");     

@@ -13,7 +13,7 @@ public class Magician_property : character_property
         satk = 45;
         sdef = 20;
         speed = 3.0f;
-        //dex;  
+        dex= 1.0f;  
         atkRange = 2.5f;
         //effectRange;
         cooldown = 25;

@@ -9,12 +9,12 @@ public class Sniper_property : character_property
         name = "Sniper";
         hp = 402;
         atk = 66;
-        def = 15;
+        def = 18;
         satk = 0;
         sdef = 12;
-        speed = 2.5f;
-        //dex;  
-        atkRange = 2.5f;
+        speed = 1.8f;
+        dex = 1.8f;  
+        atkRange = 4.0f;
         //effectRange;
         cooldown = 15;
         skillPower = new int[] { 16, 19, 24, 55, 125 };

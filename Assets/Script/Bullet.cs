@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     protected GameObject bullet;
     public GameObject TheChar;
     private action charA;
+    private character_property charP;
     private bool isFire = false;
 
 
@@ -23,6 +24,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         charA = TheChar.GetComponent<action>();
+        charP = TheChar.GetComponent<character_property>();
     }   
 
     // Update is called once per frame
@@ -63,6 +65,6 @@ public class Bullet : MonoBehaviour
     {
         GameObject target = charA.returnTarget();
         Vector2 dist = target.transform.position - startPos.transform.position;
-        bullet.GetComponent<Rigidbody2D>().velocity = dist.normalized * 2.0f;
+        bullet.GetComponent<Rigidbody2D>().velocity = dist.normalized * 2.0f * charP.dex;
     }
 }
