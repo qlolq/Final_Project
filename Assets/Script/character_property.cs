@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,8 @@ public class character_property : MonoBehaviour
     internal float atkRange; //攻擊範圍（手長短）只for普通攻擊
     internal float effectRange; //傷害判定範圍（AOE？單體攻擊？）只for普通攻擊
                                 //skilltime
-    
+    internal float mp;
+    internal float _mp = 0f;
     internal float cooldown;
 
     internal int []skillPower;
@@ -26,15 +27,28 @@ public class character_property : MonoBehaviour
     internal int indBurden;
     internal int indHeal;
 
+    internal int killCount;
+    internal int assistCount;
+    internal int deadCount;
+    internal bool isDead = false;
+
     protected GameObject hp_indicator;
     protected GameObject hp_Full;
     protected GameObject hp_Effect;
+    protected GameObject mp_Full;
     private bool coroutineOperating;
+
+    internal bool isReady = false;
+    internal List<GameObject> DamageList = new List<GameObject>();
+
     protected void Awake() 
     {
         indDamage = 0;
         indBurden = 0;
         indHeal = 0;
+        killCount = 0;
+        assistCount = 0;
+        deadCount = 0;
 
         _hp = hp;
         coroutineOperating = false;
@@ -50,7 +64,6 @@ public class character_property : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-
     }
 
     protected void hpInstantiate() 
@@ -67,14 +80,27 @@ public class character_property : MonoBehaviour
         float hpYPosition = this.transform.position.y - 0.75f;
         Vector3 hpPos = new Vector3(this.transform.position.x, hpYPosition, 50.0f);
         hp_indicator.transform.position = hpPos;
-    }
 
+        Transform mpTran = hp_indicator.transform.Find("mp_Effect");
+        Transform mp_empty = mpTran.transform.Find("mpBarFIll_0");
+        mp_Full = mp_empty.gameObject;
+
+        float mpYPosition = this.transform.position.y - 1.09f;
+        float mpXPosition = this.transform.position.x - 0.6f;
+        Vector3 mpPos = new Vector3(mpXPosition, mpYPosition, 50.0f);
+        mp_Full.transform.position = mpPos;
+    }
     public int Damageable(int damage) 
     {
+        if(_hp<=0)
+        {
+            return 0;
+        }
 
         if (_hp - damage <= 0)
         {
             _hp = 0;
+            isDead = true;
         }
 
         else 
@@ -99,6 +125,21 @@ public class character_property : MonoBehaviour
         return indBurden;
     }
 
+    public int IndicatorKill()
+    {
+        return killCount;
+    }
+
+    public int IndicatorAssist()
+    {
+        return assistCount;
+    }
+
+    public int IndicatorDead()
+    {
+        return deadCount;
+    }
+
     void HealthBarEffect(int damage) 
     {
         float currentHpRatio = (float)_hp / hp;
@@ -106,10 +147,24 @@ public class character_property : MonoBehaviour
 
         hp_Full.transform.localScale = new Vector3(currentHpRatio, 1f, 1f);
 
+        _mp += damage/5;
+        //Debug.Log(_mp);        
+        float currentMpRatio = (float)_mp / mp;
+
+        mp_Full.transform.localScale = new Vector3(currentMpRatio, 1f, 1f);
+
+        if(_mp>=mp)
+        {
+            _mp = mp;
+            isReady = true;
+        }
+
         if (hp_Effect.transform.localScale.x > hp_Full.transform.localScale.x && coroutineOperating == false)
         {
             StartCoroutine(HpBarEffectMovement(hp_Full.transform.localScale, hp_Effect.transform.localScale));
         }
+
+
     }
 
     IEnumerator HpBarEffectMovement(Vector3 targetScale, Vector3 startScale)

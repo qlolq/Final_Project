@@ -273,6 +273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8639526394519143098}
+    - targetCorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2031543182369500073}
   m_SourcePrefab: {fileID: 100100000, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
 --- !u!1 &1943148649748036330 stripped
 GameObject:
@@ -309,6 +312,21 @@ MonoBehaviour:
   startPos: {fileID: 1943148649748036330}
   liziballPrefab: {fileID: 6877871454557732213, guid: c9f363e473b0eb84ab70026e69e0ea69, type: 3}
   TheChar: {fileID: 3488411685498279745}
+--- !u!114 &2031543182369500073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943148649748036330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5455eaf22407640b11b7ef162b7b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {fileID: 1943148649748036330}
+  thunderPrefab: {fileID: 4609218366717598246, guid: d61c6f730033e164298e3091a5d55473, type: 3}
+  TheChar: {fileID: 3488411685498279745}
 --- !u!4 &8008778342178003922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994535994680476995, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
@@ -322,6 +340,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6684849334076902436}
     m_Modifications:
+    - target: {fileID: 3269758220148926039, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4390982431916229027, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
       propertyPath: m_Name
       value: hp_indicator

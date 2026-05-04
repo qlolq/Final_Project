@@ -25,7 +25,8 @@ public class teamManager : MonoBehaviour
     protected bool isAlive;
     internal int damage = 0;
     internal int count = 0;
-    internal int[] AttackedType = new int[100];
+    internal int teamScore = 0;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -213,7 +214,7 @@ public class teamManager : MonoBehaviour
 
         else
         {
-            damage =  Mathf.Max(60 * meThis.atk / (target.def + 10), 0);            
+            damage =  Mathf.Max(30 * meThis.atk / (target.def + 10), 0);            
         }
 
         //Debug.Log(damage);
@@ -222,7 +223,35 @@ public class teamManager : MonoBehaviour
         meThis.IndicatorDamage(damage);
         target.IndicatorBurden(damage);
 
-        tarA.isAttacked = true;
+        target.DamageList.Add(meThis.gameObject);
+
+
+        Debug.Log(target.isDead);
+
+        for(int k=0;k<target.DamageList.Count;k++)
+        {
+            if(target.isDead)
+            {
+                target.isDead = false;
+                meThis.killCount++;
+                target.deadCount++;
+                teamScore++;
+
+                HashSet<GameObject> assistSet = new HashSet<GameObject>(target.DamageList);
+                assistSet.Remove(meThis.gameObject);  
+                foreach (GameObject assistant in assistSet)
+                {
+                character_property assistantProp = assistant.GetComponent<character_property>();
+                if (assistantProp != null)
+                        assistantProp.assistCount++;
+                }
+                break;
+            }
+        }
+
+        
+
+        // tarA.isAttacked = true;
     }
 
     /// <summary> ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

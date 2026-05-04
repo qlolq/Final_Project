@@ -28,8 +28,8 @@ public class action : MonoBehaviour
     protected float speed;
     protected float attackRange;
 
+    protected float atk;
     protected float cooldown;
-
     protected string name;
 
     //animation state
@@ -43,6 +43,8 @@ public class action : MonoBehaviour
     float skilltimer = 7.0f;
     float attackTimer = 0f;
 
+    float extraTime = 5.0f;
+
     float deadTimer = 0f;
 
     //determine
@@ -52,8 +54,11 @@ public class action : MonoBehaviour
     
     internal bool hasSkillDamage = false;
 
-    internal bool isRangeAttacking = false;
+    internal bool hasExtraSkillDamage = true;
+
     internal bool isSkillAttacking = false;
+
+    internal bool isExtraSkillAttacking = false;
 
     internal bool isDead = false;
     internal Rigidbody2D rb;
@@ -67,6 +72,8 @@ public class action : MonoBehaviour
 
     internal int currentSkillIndex = -1;
 
+    internal bool ExtraOver = true;
+    
     //FSM state
     public enum FSMState 
     {
@@ -232,8 +239,10 @@ public class action : MonoBehaviour
         // Debug.Log($"{curState}+{currentAniLength}+{attackCount}");
         // Debug.Log(this.attackRange);
         //Debug.Log(name);
-        Debug.Log(animationState);
+        //Debug.Log(animationState);
         //Debug.Log(this.gameObject);
+        //Debug.Log(charP.isReady);
+        //Debug.Log(hasExtraSkillDamage);
 
         if(skilltimer < cooldown)
         {
@@ -244,6 +253,20 @@ public class action : MonoBehaviour
         {
             skilltimer = cooldown;
         }
+
+        if(!ExtraOver)
+         {
+            charP.atk +=30;
+            charP.dex +=0.5f;
+            DistTimer += Time.deltaTime;
+
+            if(DistTimer>=extraTime)
+            {
+                charP.atk -=30;
+                charP.dex -=0.5f;
+                ExtraOver = true;
+            }
+         }
     }
 
     protected void UpdateIdleState(GameObject target)
@@ -265,7 +288,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector(animationState));
             }
 
-            else if (CalculateMagnitude() <= attackRange && skilltimer < cooldown)    // attack to target if arrive
+            else if (CalculateMagnitude() <= attackRange && skilltimer < cooldown && !charP.isReady)    // attack to target if arrive
             {
                 animationState = 10;
                 animator.SetInteger("Action", animationState);
@@ -276,7 +299,7 @@ public class action : MonoBehaviour
                 StartCoroutine(AniLengthDetector(animationState));
             }
 
-            else if(CalculateMagnitude() <= attackRange && skilltimer >= cooldown)
+            else if(CalculateMagnitude() <= attackRange && skilltimer >= cooldown && !charP.isReady)
             {
                 if(name.Equals("Swordsman"))
                 {
@@ -304,6 +327,38 @@ public class action : MonoBehaviour
 
                 skilltimer = 0f;
             }
+
+            if(charP.isReady)
+            {
+                // Debug.Log(charP.isReady);
+                if(name.Equals("Swordsman"))
+                {
+                    IsSword();
+                }
+
+                else if(name.Equals("Magician"))
+                {
+                    IsThunder();
+                }
+
+                else if(name.Equals("Sniper"))
+                {
+                    ExtraOver = false;
+                }
+
+                charP._mp = 0f;
+                charP.isReady = false;
+
+                animationState = 14;
+                animator.SetInteger("Action", animationState);
+                curState = FSMState.ExtraSkill;
+                hasExtraSkillDamage = false;
+                DistTimer = 0f;
+                StartCoroutine(AniLengthDetector(animationState));
+
+                skilltimer = 0f;
+            }
+            
         }
     }
 
@@ -467,10 +522,12 @@ public class action : MonoBehaviour
         charP.cooldown = 0.0f;
         hasDealDamage = false;
         hasSkillDamage = false;
+        hasExtraSkillDamage = false;
         IsFireTimer = -1.2f;      
         isSkillAttacking = false;
+        isExtraSkillAttacking = false;
         isDash = false;
-        
+        isDead = false;        
         
         if (DistTimer >= currentAniLength + 0.3f)
         {
@@ -573,7 +630,22 @@ public class action : MonoBehaviour
 
     protected void UpdateExtraSkillState()
     {
+        IsExtraSkillAttacking();
+        SpriteToFilp();
+
+        DistTimer += Time.deltaTime;
+
+        if (DistTimer >= currentAniLength + 0.3f)
+        {
+            animationState = 0;
+            animator.SetInteger("Action", animationState);
+            curState = FSMState.Idle;
+            DistTimer = 0f;
+            StartCoroutine(AniLengthDetector(animationState));
+        }
+        
     }
+
 /// <summary>
 /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// </summary>
@@ -781,7 +853,6 @@ public class action : MonoBehaviour
                 }
                 
                 hasDealDamage = true;
-
             }
         }
     }
@@ -818,6 +889,49 @@ public class action : MonoBehaviour
         //isSkillAttacking = false;
     }
 
+    public void IsExtraSkillAttacking()
+    {
+        if(animationState==14)
+        {
+            if(!hasExtraSkillDamage)
+            {
+                if(name.Equals("Swordsman"))
+                {
+                    isExtraSkillAttacking = true;
+                    if(isExtraSkillAttacking)
+                    {
+                        myTM.HealthInitial(this.gameObject, target);
+                        isExtraSkillAttacking = false;
+                    }
+                }
+
+                else if(name.Equals("Magician"))
+                {
+                    isExtraSkillAttacking = true;
+                    if(isExtraSkillAttacking)
+                    {
+                        IsFire();
+                        myTM.HealthInitial(this.gameObject, target);
+                        isExtraSkillAttacking = false;
+                    }
+                }
+
+                // else if(name.Equals("Sniper"))
+                // {
+                //     isExtraSkillAttacking = true;
+                //     if(isExtraSkillAttacking)
+                //     {
+                //         IsFire();
+                //         myTM.HealthInitial(this.gameObject, target);
+                //         isExtraSkillAttacking = false;
+                //     }
+                // }
+                
+                hasExtraSkillDamage = true;
+            }
+        }
+    }
+
     /// <summary>
     /// ////////////////////////bullet and ball/////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// </summary>
@@ -833,6 +947,31 @@ public class action : MonoBehaviour
         }
         return false;
     }
+
+    public bool IsSword() 
+    {
+        // Debug.Log("IsFire");
+        IsFireTimer += Time.deltaTime;
+        if(IsFireTimer >= currentAniLength+0.1f && CalculateMagnitude() < 50.0f && !hasExtraSkillDamage)
+        {
+            IsFireTimer = 0f;
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsThunder() 
+    {
+        // Debug.Log("IsFire");
+        IsFireTimer += Time.deltaTime;
+        if(IsFireTimer >= currentAniLength+0.1f && CalculateMagnitude() < 50.0f && !hasExtraSkillDamage)
+        {
+            IsFireTimer = 0f;
+            return true;
+        }
+        return false;
+    }
+
     public bool IsSkillFire() 
     {   
         //Debug.Log("IsSkillFire");     
@@ -845,6 +984,7 @@ public class action : MonoBehaviour
         }
         return false;
     }
+
     public GameObject returnTarget()
     {
         return target;

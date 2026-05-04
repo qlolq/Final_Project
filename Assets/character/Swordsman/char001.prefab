@@ -199,7 +199,6 @@ MonoBehaviour:
   bulletRenderer: {fileID: 4844169757445259655, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
   bulletStartPos: {fileID: 6364603839043350918}
   bullet: {fileID: 8142288019137928932, guid: c2351a190e6e43b44820bcd7db9ae289, type: 3}
-  hitCollider: {fileID: 7197439462097733210}
 --- !u!114 &1956887269062863319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,8 +227,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1897522525920547614, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897522525920547614, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2086427223615508183, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269758220148926039, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
+      propertyPath: m_LocalScale.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4390982431916229027, guid: aa2ed6c826ec0d147933c8cc0241a3e3, type: 3}
@@ -373,7 +384,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6673375308687196994}
   m_SourcePrefab: {fileID: 100100000, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
 --- !u!4 &3278633065434992830 stripped
 Transform:
@@ -385,3 +399,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3495846750228014203, guid: fcc77b52a53254643aba1f6866c8adff, type: 3}
   m_PrefabInstance: {fileID: 7552575472652998141}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6673375308687196994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364603839043350918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f4b98d5165f6b4fabd64b95465b934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {fileID: 6364603839043350918}
+  bulletPrefab: {fileID: 5880434875717917059, guid: 43a77cd535d7ffb4dabd12ed9a57e6cb, type: 3}
+  TheChar: {fileID: 4220550761378826047}

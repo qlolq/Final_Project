@@ -8,6 +8,7 @@ public class Magician_property : character_property
     {
         name = "Magician";
         hp = 422;
+        mp = 150;
         atk = 45;
         def = 19;
         satk = 45;
@@ -17,7 +18,7 @@ public class Magician_property : character_property
         atkRange = 2.5f;
         //effectRange;
         cooldown = 25;
-        skillPower = new int[] { 12, 16, 18, 60, 125 };
+        skillPower = new int[] { 12, 16, 18, 30, 45 };
         base.Awake();
     }
 

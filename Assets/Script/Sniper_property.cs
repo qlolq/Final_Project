@@ -8,6 +8,7 @@ public class Sniper_property : character_property
     {
         name = "Sniper";
         hp = 402;
+        mp = 120;
         atk = 66;
         def = 18;
         satk = 0;
@@ -17,7 +18,7 @@ public class Sniper_property : character_property
         atkRange = 4.0f;
         //effectRange;
         cooldown = 15;
-        skillPower = new int[] { 16, 19, 24, 55, 125 };
+        skillPower = new int[] { 16, 19, 24, 55, 30 };
         base.Awake();
     }
 

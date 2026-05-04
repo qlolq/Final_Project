@@ -17,6 +17,14 @@ public class UI_Manager : MonoBehaviour
     public TextMeshProUGUI[] BlueIndicatorName;
     public TextMeshProUGUI[] RedIndicatorName;
 
+    public TextMeshProUGUI[] RedIndicatorKill;
+    public TextMeshProUGUI[] RedIndicatorAssist;
+    public TextMeshProUGUI[] RedIndicatorDead;
+    public TextMeshProUGUI[] BlueIndicatorKill;
+    public TextMeshProUGUI[] BlueIndicatorAssist;
+    public TextMeshProUGUI[] BlueIndicatorDead;
+    public TextMeshProUGUI BlueTeamScore;
+    public TextMeshProUGUI RedTeamScore;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +68,10 @@ public class UI_Manager : MonoBehaviour
             BlueIndicatorDamage[i].text = charP.indDamage.ToString();
             BlueIndicatorBurden[i].text = charP.indBurden.ToString();
             BlueIndicatorName[i].text = charP.name;
-
+            BlueIndicatorKill[i].text = charP.killCount.ToString();
+            BlueIndicatorAssist[i].text = charP.assistCount.ToString();
+            BlueIndicatorDead[i].text = charP.deadCount.ToString();
+            BlueTeamScore.text = BlueTeam.teamScore.ToString();
         }
     }
 
@@ -76,6 +87,10 @@ public class UI_Manager : MonoBehaviour
             RedIndicatorDamage[i].text = charP.indDamage.ToString();
             RedIndicatorBurden[i].text = charP.indBurden.ToString();
             RedIndicatorName[i].text = charP.name;
+            RedIndicatorKill[i].text = charP.killCount.ToString();
+            RedIndicatorAssist[i].text = charP.assistCount.ToString();
+            RedIndicatorDead[i].text = charP.deadCount.ToString();
+            RedTeamScore.text = RedTeam.teamScore.ToString();
         }
     }
 }
