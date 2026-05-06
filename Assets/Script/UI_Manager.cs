@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class UI_Manager : MonoBehaviour
     {
         UpdateBlueIndicatorDetail(BlueTeam.teamNum);
         UpdateRedIndicatorDetail(BlueTeam.teamNum);
+
     }
 
     void BlueIndicatorHide() 

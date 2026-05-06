@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using TMPro;
+
 
 //using System.Numerics;
 using NUnit.Framework;
@@ -9,6 +12,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.MPE;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 //using static action;
 
 public class action : MonoBehaviour
@@ -20,9 +24,11 @@ public class action : MonoBehaviour
     internal GameObject target;
     internal character_property charP;
     private teamManager myTM;
-
+    private teamManager tarTM;
     public GameObject bulletStartPos;
     public GameObject bullet;
+
+    internal Timer timer;
 
     // property
     protected float speed;
@@ -73,7 +79,11 @@ public class action : MonoBehaviour
     internal int currentSkillIndex = -1;
 
     internal bool ExtraOver = true;
-    
+
+    internal bool isTimeOut = false;
+
+    internal string teamWin = "";
+        
     //FSM state
     public enum FSMState 
     {
@@ -120,6 +130,12 @@ public class action : MonoBehaviour
             {
                 // Debug.Log(this.gameObject.tag);
                 myTM = manager;
+                break;
+            }
+
+            if(manager.gameObject.CompareTag(target.tag))
+            {
+                tarTM = manager;
                 break;
             }
         }
@@ -267,6 +283,14 @@ public class action : MonoBehaviour
                 ExtraOver = true;
             }
          }
+
+        
+        timer = FindObjectOfType<Timer>();
+
+        if (timer.timeDeliver <= 0 && !isTimeOut)
+        {
+            Time.timeScale = 0;
+        }
     }
 
     protected void UpdateIdleState(GameObject target)
@@ -777,42 +801,15 @@ public class action : MonoBehaviour
         target = nearestTarget;
     }
 
-    // void OnTriggerEnter2D(Collider2D collider) 
-    // {
-    //     // Debug.Log("Triggered");
-    //     if (target == null) return;
-    //     character_property tarCharP = target.GetComponent<character_property>();
-    //     action tarAct = target.GetComponent<action>();
+    public void ReceiveLowestHPTarget(GameObject lowestHPTarget)
+    {
+        target = lowestHPTarget;
+    }
 
-    //     if(tarCharP.atkRange <= 0.5f) 
-    //     {
-    //         if (collider.gameObject == target)
-    //         {
-    //             this.isAttacked = true;
-    //         }
-    //     }
-
-    //     if (tarCharP.atkRange > 0.5f)
-    //     {
-    //                 // Debug.Log("Triggered,Bullet");
-    //         if (collider.CompareTag("Bullet"))
-    //         {
-    //             this.isAttacked = true;
-    //             Bullet bullet = collider.GetComponent<Bullet>();
-    //             bullet.BulletDistroy();
-    //         }
-    //     }
-    // }
-
-    // void OnTriggerExit2D(Collider2D collider) 
-    // {
-    //     if (target == null) return;
-
-    //     if (collider.gameObject == target || collider.CompareTag("Bullet")) 
-    //     {
-    //         isAttacked = false;
-    //     }
-    // }
+    public void ReceiveLowest_HPTarget(GameObject lowest_HPTarget)
+    {
+        target = lowest_HPTarget;
+    }
 
     public void IsAttacking()
     {

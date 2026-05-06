@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 using UnityEngine;
 
 public class teamManager : MonoBehaviour
@@ -19,6 +21,9 @@ public class teamManager : MonoBehaviour
     protected GameObject[] targets;
     internal float nearestDist;
     internal GameObject nearestTarget;
+    internal int lowestHP;
+    internal GameObject lowestHPTarget;
+    internal GameObject lowest_HPTarget;
 
     protected float exploreTimer;
     protected float timeDeliver;
@@ -55,12 +60,16 @@ public class teamManager : MonoBehaviour
         CharacterInstantiate(teamTag);
         DetectTeamTag(teamTag);
         GiveName(teamTag);
+
+
+
     }
 
     void Update()
     {
         EnemyList(teamNum);
         TimerOperate();
+        MPStratgy(teamNum);
         //Debug.Log(nearestTarget);
         //Debug.Log(nearestDist);
         //Debug.Log(damage);
@@ -161,10 +170,35 @@ public class teamManager : MonoBehaviour
 
     void TimerOperate()
     {
+        int[] blueStrategy = SettingManager.ReturnBlueStrategyIndex();
+        int[] redStrategy = SettingManager.ReturnRedStrategyIndex();
+
+        int blueChoice = blueStrategy[0]; 
+        int redChoice = redStrategy[0];
+
         if (timeDeliver >= exploreTimer)
         {
-            ExploreTargetViaDistance(teamNum);
             timeDeliver = 0.0f;
+
+            switch (blueChoice)
+            {
+                case 0: ExploreTargetViaLowerHP(teamNum);
+                break;
+                case 1: ExploreTargetViaDistance(teamNum);
+                break;
+                case 2: ExploreTargetViaLowerHP(teamNum);
+                break;
+            }
+
+            switch (redChoice)
+            {
+                case 0: ExploreTargetViaLowerHP(teamNum);
+                break;
+                case 1: ExploreTargetViaDistance(teamNum);
+                break;
+                case 2: ExploreTargetViaLowerHP(teamNum);
+                break;
+            }
         }
 
         else {
@@ -226,7 +260,7 @@ public class teamManager : MonoBehaviour
         target.DamageList.Add(meThis.gameObject);
 
 
-        Debug.Log(target.isDead);
+        // Debug.Log(target.isDead);
 
         for(int k=0;k<target.DamageList.Count;k++)
         {
@@ -289,6 +323,133 @@ public class teamManager : MonoBehaviour
 
             action Action = meThis.GetComponent<action>();
             Action.ReceiveNearestTarget(nearestTarget);
+        }
+    }
+
+    public void ExploreTargetViaLowerHP(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject meThis = Team[i];
+            nearestDist = 300.0f;
+
+            for(int j =0;j<count;j++)
+            {
+                GameObject target = targets[j];
+                character_property tarCharP = target.GetComponent<character_property>();
+                lowestHP = 1000;
+                targetDist[j] = Vector3.Distance(target.transform.position, meThis.transform.position);
+
+
+                if(tarCharP.hp < lowestHP && targetDist[j] < 100.0f)
+                {
+                    lowestHP = tarCharP.hp;
+                    lowestHPTarget = target;   // find the target
+                }     
+
+            }
+
+            action Action = meThis.GetComponent<action>();
+            Action.ReceiveLowestHPTarget(lowestHPTarget);
+        }
+    }
+
+    public void ExploreTargetViaLower_HP(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject meThis = Team[i];
+            nearestDist = 300.0f;
+
+            for(int j =0;j<count;j++)
+            {
+                GameObject target = targets[j];
+                character_property tarCharP = target.GetComponent<character_property>();
+                lowestHP = 1000;
+                targetDist[j] = Vector3.Distance(target.transform.position, meThis.transform.position);
+                if(tarCharP._hp < lowestHP && targetDist[j] < 100.0f)
+                {
+                    lowestHP = tarCharP._hp;
+                    lowestHPTarget = target;   // find the target
+                }     
+            }
+
+            action Action = meThis.GetComponent<action>();
+            Action.ReceiveLowest_HPTarget(lowest_HPTarget);
+        }
+    }
+
+    public void MPStratgy(int count)
+    {
+        for(int i =0;i<count;i++)
+        {
+            GameObject meThis = Team[i];
+            GameObject target = Enemy.Team[i];
+            character_property charP = meThis.GetComponent<character_property>();
+            character_property charTar = target.GetComponent<character_property>();
+
+            int[] blueStrategy = SettingManager.ReturnBlueStrategyIndex();
+            int blueChoice = blueStrategy[1];
+            int[] redStrategy = SettingManager.ReturnBlueStrategyIndex();
+            int redChoice = redStrategy[1];
+
+            if(Team[i].tag=="BlueTeam")
+            {
+                switch(blueChoice)
+                {
+                    case 0:
+                        charP.mp /= 2;
+                        break;
+                    case 1:
+                        charP.mp /= 1;
+                        break;
+                    case 2:
+                        charP.mp /= 0.5f;
+                        break;
+                }
+
+                switch(redChoice)
+                {
+                    case 0:
+                        charTar.mp /= 2;
+                        break;
+                    case 1:
+                        charTar.mp /= 1;
+                        break;
+                    case 2:
+                        charTar.mp /= 0.5f;
+                        break;
+                }            
+            }
+
+            else
+            {
+                switch(redChoice)
+                {
+                    case 0:
+                        charP.mp /= 2;
+                        break;
+                    case 1:
+                        charP.mp /= 1;
+                        break;
+                    case 2:
+                        charP.mp /= 0.5f;
+                        break;
+                }
+
+                switch(blueChoice)
+                {
+                    case 0:
+                        charTar.mp /= 2;
+                        break;
+                    case 1:
+                        charTar.mp /= 1;
+                        break;
+                    case 2:
+                        charTar.mp /= 0.5f;
+                        break;
+                }   
+            }
         }
     }
 }
